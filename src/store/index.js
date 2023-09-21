@@ -3,19 +3,14 @@ import { createStore } from 'vuex'
 const store = createStore({
   state() {
     return {
-      count: 0
+      loginStatus: false
     }
   },
   mutations: {
-    increment(state) {
-      state.count++
+    updateLoginStatus(state) {
+      state.loginStatus = !state.loginStatus
     }
   },
-  getters: {
-    doubleCount(state) {
-      return state.count * 2
-    }
-  }
 })
 
 export default store
