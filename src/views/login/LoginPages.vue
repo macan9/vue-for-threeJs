@@ -13,13 +13,24 @@
 </template>
 <script>
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex'
 export default {
+    
     setup(){
+        
+        
+        
+        const store = useStore()
+        const updateLoginStatus = () => {
+            store.commit('updateLoginStatus')
+        }
+
         const router = useRouter();
         function handleSubmit(){
-            console.log('11111---')
             router.push('/')
+            updateLoginStatus()
         }
+
         return {
             handleSubmit
         };
