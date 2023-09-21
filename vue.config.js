@@ -7,6 +7,7 @@ module.exports = {
   devServer: {
     port: 8010,
   },
+  // 配置公共路径
   configureWebpack: {
     resolve: {
       alias: {
@@ -14,6 +15,7 @@ module.exports = {
       }
     }
   },
+  publicPath: './',
   // 配置vue文件中可以解析  lang = 'scss' 
   pluginOptions: {
     'style-resources-loader': {
@@ -29,6 +31,6 @@ module.exports = {
       },
     },
   },
-  publicPath: '/'
+  
   
 };
