@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { useStore } from 'vuex'
+
 
 
 import HomeView from '../views/HomeView.vue'
@@ -7,9 +7,10 @@ import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: HomeView,
+    redirect:'/blogMain',
     children: [
       {
         path: 'blogMain',
@@ -35,6 +36,8 @@ const router = createRouter({
   routes
 })
 
+
+import { useStore } from 'vuex'
 router.beforeEach((to,from,next) => {
   // 全局前置守卫，会在每个路由导航之前调用
   const store = useStore()
