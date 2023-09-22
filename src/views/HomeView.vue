@@ -1,35 +1,57 @@
 <template>
   <div class="home">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
     <!-- <img alt="Vue logo" src="@/assets/logo.png"> -->
-    <button @click="loginOut"> 退出 </button>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <button @click="loginOut"> 退出 </button>
+    <br/>
+    <button @click="getMockData"> 尝试请求 mock 数据 </button>
+    <el-button type="primary">Primary</el-button>
+
+    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+
+
+    <MenuForTop />
+    <div class="display-flex">
+      <MenuForLeft />
+      <div class="main-display">
+        <router-view/>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router';
+import MenuForTop from '@/components/menu/MenuForTop.vue'
+import MenuForLeft from '@/components/menu/MenuForLeft.vue'
+
+import { loginReq } from "@/apis/login.js"
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    MenuForTop,
+    MenuForLeft,
   },
   setup(){
-    const store = useStore()
-    const router = useRouter();
-    const loginOut = () => {
-        store.commit('updateLoginStatus')
-        router.push('/login')
+
+    const getMockData = () => {
+        loginReq()
     }
     return {
-      loginOut
+      getMockData
     };
   }
 }
 </script>
+<style lang="scss">
+.home{
+  height: 100%;
+  .display-flex{
+    height: calc(100% - 60px);
+    display: flex;
+  }
+  .main-display{
+    width: calc(100% - 230px);
+  }
+}
+</style>
