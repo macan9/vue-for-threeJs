@@ -1,27 +1,37 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useStore } from 'vuex'
+
+
+import HomeView from '../views/HomeView.vue'
+
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    children: [
+      {
+        path: 'blogMain',
+        name: 'blogMain',
+        component: () => import('@/views/blogSystem/BlogMain.vue')
+      }
+    ]
   },
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/homePage/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/homePage/AboutView.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login/LoginPages.vue')
+    component: () => import('@/views/login/LoginPages.vue')
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 })
 

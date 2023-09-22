@@ -27,7 +27,7 @@ export default {
 
         const router = useRouter();
         function handleSubmit(){
-            router.push('/')
+            router.push('/home')
             updateLoginStatus()
         }
 
