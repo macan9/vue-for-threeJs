@@ -1,6 +1,6 @@
 <template>
     <div class="login-page1">
-        <form method="post" @submit="handleSubmit" class="box">
+        <form method="post" @submit.prevent="handleSubmit" class="box">
             <h1>Login</h1>
             <br>
             <hr>
@@ -27,7 +27,7 @@ export default {
 
         const router = useRouter();
         function handleSubmit(){
-            router.push('/home')
+            router.push('/blogMain')
             updateLoginStatus()
         }
 
