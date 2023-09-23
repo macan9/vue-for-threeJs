@@ -23,6 +23,7 @@ Mock.mock(`${baseURL}/login`,'post',(options)=>{
         backData.status = 200
         backData.message = "登录成功"
         backData.token = Mock.Random.string(30)
+        backData.username = body.username
       }else{
         backData.message = "密码错误"
       }
