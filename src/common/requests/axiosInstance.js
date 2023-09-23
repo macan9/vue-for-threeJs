@@ -14,7 +14,7 @@ const api = axios.create({
 // interceptors axios的拦截器对象
 api.interceptors.request.use(config => {
 	// config 请求的所有信息
-   // console.log(config);
+   // console.log(config,'interceptors,request');
    return config // 将配置完成的config对象返回出去 如果不返回 请求讲不会进行
 }, err => {
    // 请求发生错误时的相关处理 抛出错误
@@ -24,8 +24,8 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(res => {
     // 我们一般在这里处理，请求成功后的错误状态码 例如状态码是500，404，403
     // res 是所有相应的信息
-    console.log(res)
-   return Promise.resolve(res)
+   console.log(res,'interceptors.response')
+   return res
 }, err => {
     // 服务器响应发生错误时的处理
     Promise.reject(err)

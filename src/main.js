@@ -13,6 +13,7 @@ require('./common/mock/index.js')
 // 定义 app 
 const app = createApp(App)
 
+// 注册 element icon 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }

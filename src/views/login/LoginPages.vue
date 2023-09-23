@@ -4,20 +4,25 @@
             <h1>Login</h1>
             <br>
             <hr>
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
+            <input v-model="username" type="text" name="username" placeholder="Username">
+            <input v-model="password" type="password" name="password" placeholder="Password">
             <input type="submit">
             <p>Forget password ?</p>
         </form>
     </div>
 </template>
 <script>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'
+
+import { loginReq } from "@/apis/login.js"
+import { ElMessage } from 'element-plus'
 export default {
     
     setup(){
-        
+        const username = ref('admin');
+        const password = ref('123123');
         
         
         const store = useStore()
@@ -26,12 +31,35 @@ export default {
         }
 
         const router = useRouter();
-        function handleSubmit(){
-            router.push('/blogMain')
-            updateLoginStatus()
+
+        async function handleSubmit(){
+            const userData = { 
+                username:username.value,
+                password:password.value 
+            }
+            const { data } = await loginReq(userData)
+
+            if(data.status == 200){
+
+                ElMessage({
+                    message: data.message,
+                    type: 'success',
+                })
+                
+                updateLoginStatus()
+                router.push('/blogMain')   
+            }else{
+                ElMessage({
+                    message: data.message,
+                    type: 'error',
+                })
+                return
+            }
         }
 
         return {
+            username,
+            password,
             handleSubmit
         };
     }
