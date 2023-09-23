@@ -1,12 +1,13 @@
 <template>
     <div class="login-page1">
-        <form method="post" @submit.prevent="handleSubmit" class="box">
+        <form method="post" class="box">
             <h1>Login</h1>
             <br>
             <hr>
             <input v-model="username" type="text" name="username" placeholder="Username">
             <input v-model="password" type="password" name="password" placeholder="Password">
-            <input type="submit">
+            <el-button @click="handleSubmit">登录</el-button>
+            <el-button @click="openRigsterPage">注册</el-button>
             <p>Forget password ?</p>
         </form>
     </div>
@@ -26,10 +27,6 @@ export default {
         
         
         const store = useStore()
-        const updateLoginStatus = () => {
-            store.commit('updateLoginStatus')
-        }
-
         const router = useRouter();
 
         async function handleSubmit(){
@@ -46,7 +43,8 @@ export default {
                     type: 'success',
                 })
                 
-                updateLoginStatus()
+                store.commit('updateLoginStatus')
+                store.commit('updateUserInfo',data)
                 router.push('/blogMain')   
             }else{
                 ElMessage({
@@ -57,10 +55,15 @@ export default {
             }
         }
 
+        const openRigsterPage = () => {
+            // console.log('111')
+        }
+
         return {
             username,
             password,
-            handleSubmit
+            handleSubmit,
+            openRigsterPage
         };
     }
 }

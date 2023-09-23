@@ -1,6 +1,6 @@
 <template>
     <el-menu
-      :default-active="activeIndex2"
+      :default-active="activeIndex"
       class="el-menu-demo"
       mode="horizontal"
       background-color="#545c64"
@@ -14,17 +14,11 @@
         <el-menu-item index="2-1">item one</el-menu-item>
         <el-menu-item index="2-2">item two</el-menu-item>
         <el-menu-item index="2-3">item three</el-menu-item>
-        <el-sub-menu index="2-4">
-          <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
-        </el-sub-menu>
       </el-sub-menu>
       <el-menu-item index="3" disabled>Info</el-menu-item>
       <el-menu-item index="4">Orders</el-menu-item>
       <el-sub-menu index="5" class="position-left">
-        <template #title><el-icon><UserFilled /></el-icon>User</template>
+        <template #title><el-icon><UserFilled /></el-icon>{{username}}</template>
         <el-menu-item index="5-1" @click="loginOut">login out</el-menu-item>
       </el-sub-menu>
 
@@ -38,14 +32,18 @@
     import {
         UserFilled
     } from '@element-plus/icons-vue'
+    const store = useStore()
+    const router = useRouter()
 
-    const activeIndex2 = ref('1')
+    const activeIndex = ref('1')
+    const username = store.state.userInfo.username
+
+
     const handleSelect = (key, keyPath) => {
         console.log(key, keyPath)
     }
 
-    const store = useStore()
-    const router = useRouter();
+    
     const loginOut = () => {
         store.commit('updateLoginStatus')
         router.push('/login')
