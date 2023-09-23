@@ -50,6 +50,11 @@ module.exports = {
 3. element plus icon 部分功能需要全局注册才能正常使用
 4. mock 会拦截浏览器 http。如果mock配置正确，反而不会产生 http 请求
 5. axios全局注册目前看来没有节约多少代码量，不如将各种 api 放在一起管理
+6. 不能使用 debugger   package.json 里的 eslintConfig 配置 rules 即可解决
+
+### 还没解决的问题
+1. 无
+   
 
 
 
