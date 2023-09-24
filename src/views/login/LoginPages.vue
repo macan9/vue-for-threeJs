@@ -10,6 +10,7 @@
             <el-button @click="openRigsterPage">注册</el-button>
             <p>Forget password ?</p>
         </form>
+        <UserRegister :dialogVisible="dialogVisible"></UserRegister>
     </div>
 </template>
 <script>
@@ -19,11 +20,13 @@ import { useStore } from 'vuex'
 
 import { loginReq } from "@/apis/login.js"
 import { ElMessage } from 'element-plus'
+import UserRegister from '@/components/user/UserRegister.vue'
 export default {
-    
+    components: { UserRegister },
     setup(){
         const username = ref('admin');
         const password = ref('123123');
+        const dialogVisible = ref(false)
         
         
         const store = useStore()
@@ -62,6 +65,7 @@ export default {
         return {
             username,
             password,
+            dialogVisible,
             handleSubmit,
             openRigsterPage
         };
