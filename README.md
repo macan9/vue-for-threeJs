@@ -52,6 +52,23 @@ module.exports = {
 5. axios全局注册目前看来没有节约多少代码量，不如将各种 api 放在一起管理
 6. 不能使用 debugger   package.json 里的 eslintConfig 配置 rules 即可解决
 
+
+vue3 语法学习
+7. 在 setup 中定义 props, 以及取到 props的值，setup 一定要定义类型
+```js
+ import { defineProps,toRefs } from 'vue'
+ <script lang="js" setup>
+    const props = defineProps({
+       dialogVisible: {
+         type: Boolean,
+         default: false,
+       },
+    });
+    const {dialogVisible} = toRefs(props)
+  </script>
+```
+1. 
+
 ### 还没解决的问题
 1. 无
    

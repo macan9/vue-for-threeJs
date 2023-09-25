@@ -1,8 +1,8 @@
 <template>
     <el-dialog
     v-model="dialogVisible"
-    title="Tips"
-    width="30%"
+    title="用户注册"
+    width="45%"
     :before-close="handleClose"
   >
 
@@ -19,20 +19,28 @@
   </el-dialog>
 </template>
 <script lang="js" setup>
-import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+  // import { ref } from 'vue'
+  import { defineProps,toRefs } from 'vue'
+  import { ElMessageBox } from 'element-plus'
 
-const dialogVisible = ref(false)
-
-const handleClose = (done) => {
-  ElMessageBox.confirm('Are you sure to close this dialog?')
-    .then(() => {
-      done()
-    })
-    .catch(() => {
-      // catch error
-    })
-}
+  // const dialogVisible = ref(false)
+  const props = defineProps({
+    dialogVisible: {
+      type: Boolean,
+      default: false,
+    },
+  });
+  const {dialogVisible} = toRefs(props)
+  console.log(dialogVisible)
+  const handleClose = (done) => {
+    ElMessageBox.confirm('Are you sure to close this dialog?')
+      .then(() => {
+        done()
+      })
+      .catch(() => {
+        // catch error
+      })
+  }
 </script>
 <style scoped>
 .dialog-footer button:first-child {
