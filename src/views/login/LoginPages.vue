@@ -10,7 +10,7 @@
             <el-button @click="openRigsterPage">注册</el-button>
             <p>Forget password ?</p>
         </form>
-        <UserRegister :dialogVisible="dialogVisible_"></UserRegister>
+        <UserRegister></UserRegister>
     </div>
 </template>
 <script>
@@ -31,7 +31,9 @@ export default {
         
         const store = useStore()
         const router = useRouter();
-
+        const close_dialog =  () => {
+            dialogVisible_.value = false
+        }
         async function handleSubmit(){
             const userData = { 
                 username:username.value,
@@ -58,9 +60,12 @@ export default {
             }
         }
 
+     
+  
+        
+        
         const openRigsterPage = () => {
-            // console.log('111')
-            dialogVisible_.value = true
+            // dialogVisible = true
         }
 
         return {
@@ -68,7 +73,8 @@ export default {
             password,
             dialogVisible_,
             handleSubmit,
-            openRigsterPage
+            openRigsterPage,
+            close_dialog
         };
     }
 }
