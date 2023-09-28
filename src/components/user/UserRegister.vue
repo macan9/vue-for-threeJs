@@ -21,8 +21,8 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="closeDialog" round>Cancel</el-button>
-        <el-button type="success" @click="registerUser(userRuleFormRef)" round>
+        <el-button type="primary" round @click="closeDialog" >Cancel</el-button>
+        <el-button type="success" round @click="registerUser(userRuleFormRef)" >
           Register
         </el-button>
       </span>

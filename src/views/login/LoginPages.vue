@@ -6,8 +6,8 @@
             <hr>
             <input v-model="username" type="text" name="username" placeholder="Username">
             <input v-model="password" type="password" name="password" placeholder="Password">
-            <el-button @click="handleSubmit">登录</el-button>
-            <el-button @click="openRigsterPage">注册</el-button>
+            <el-button type="primary" round @click="openRigsterPage">注册</el-button>
+            <el-button type="success" round @click="handleSubmit">登录</el-button>
             <p style="margin-top: 10px;">Forget password ?</p>
         </form>
         <UserRegister :dialogVisible="dialogVisible_"></UserRegister>
