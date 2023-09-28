@@ -44,7 +44,7 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "strict": 1,
+      "strict": 0,
       "no-debugger": 0, 
       "no-console": "off"
     }

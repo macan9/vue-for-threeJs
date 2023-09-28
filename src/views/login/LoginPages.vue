@@ -8,13 +8,13 @@
             <input v-model="password" type="password" name="password" placeholder="Password">
             <el-button @click="handleSubmit">登录</el-button>
             <el-button @click="openRigsterPage">注册</el-button>
-            <p>Forget password ?</p>
+            <p style="margin-top: 10px;">Forget password ?</p>
         </form>
-        <UserRegister></UserRegister>
+        <UserRegister :dialogVisible="dialogVisible_"></UserRegister>
     </div>
 </template>
-<script>
-import { ref } from 'vue';
+<script> 
+import { ref, reactive} from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'
 
@@ -26,14 +26,17 @@ export default {
     setup(){
         const username = ref('admin');
         const password = ref('123123');
-        const dialogVisible_ = ref(false)
+        let dialogVisible_ = reactive({attr:false})
         
         
         const store = useStore()
         const router = useRouter();
-        const close_dialog =  () => {
-            dialogVisible_.value = false
+
+        const openRigsterPage = () => {
+            console.log(dialogVisible_.attr,'dialogVisible_')
+            dialogVisible_.attr = true
         }
+
         async function handleSubmit(){
             const userData = { 
                 username:username.value,
@@ -60,21 +63,12 @@ export default {
             }
         }
 
-     
-  
-        
-        
-        const openRigsterPage = () => {
-            // dialogVisible = true
-        }
-
         return {
             username,
             password,
             dialogVisible_,
             handleSubmit,
             openRigsterPage,
-            close_dialog
         };
     }
 }
