@@ -21,14 +21,15 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Cancel</el-button>
-        <el-button type="primary" @click="registerUser(userRuleFormRef)">
+        <el-button type="primary" @click="closeDialog" round>Cancel</el-button>
+        <el-button type="success" @click="registerUser(userRuleFormRef)" round>
           Register
         </el-button>
       </span>
     </template>
   </el-dialog>
 </template>
+
 <script lang="js" setup>
   import {  defineProps,toRef, } from 'vue'
   import { ref,reactive,} from 'vue'
@@ -116,6 +117,7 @@
 }
 .user-register-style{
     margin-top: 30vh;
+    border-radius: 5px;
   .el-form{
     width: 400px;
     margin: 0 auto;
