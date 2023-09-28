@@ -54,7 +54,7 @@ module.exports = {
 
 
 vue3 语法学习
-7. 在 setup 中定义 props, 以及取到 props的值，setup 一定要定义类型
+1. 在 setup 中定义 props, 以及取到 props的值，setup 一定要定义类型
 ```js
  import { defineProps,toRefs } from 'vue'
  <script lang="js" setup>
@@ -67,7 +67,11 @@ vue3 语法学习
     const {dialogVisible} = toRefs(props)
   </script>
 ```
-1. 
+2. emit 引入
+```js
+const emit = defineEmits(['update-my-visible']);
+```
+3. toRef toRefs 会产生一个新的引用变量
 
 ### 还没解决的问题
 1. 无
