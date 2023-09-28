@@ -8,18 +8,14 @@
       active-text-color="#ffd04b"
       @select="handleSelect"
     >
-      <el-menu-item index="1">Processing Center</el-menu-item>
-      <el-sub-menu index="2">
-        <template #title>Workspace</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-      </el-sub-menu>
-      <el-menu-item index="3" disabled>Info</el-menu-item>
-      <el-menu-item index="4">Orders</el-menu-item>
-      <el-sub-menu index="5" class="position-left">
-        <template #title><el-icon><UserFilled /></el-icon>{{username}}</template>
-        <el-menu-item index="5-1" @click="loginOut">login out</el-menu-item>
+      <el-menu-item v-for="item in menu_top_config" :key="item.value" :index="item.value.toString()">
+        <el-icon> <component :is="item.icon" style="width: 20px; height:20px;"/> </el-icon>
+        <span>{{ item.label }}</span>
+      </el-menu-item>
+
+      <el-sub-menu index="99" class="position-left">
+        <template #title><el-icon><UserFilled/></el-icon>{{username}}</template>
+        <el-menu-item index="99-1" @click="loginOut">login out</el-menu-item>
       </el-sub-menu>
 
     </el-menu>
@@ -29,21 +25,20 @@
     import { useStore } from 'vuex'
     import { useRouter } from 'vue-router';
     import { ref } from 'vue'
-    import {
-        UserFilled
-    } from '@element-plus/icons-vue'
+
+    import { menu_top_config } from '@/common/config/menu_top_config'
+
+    
     const store = useStore()
     const router = useRouter()
 
-    const activeIndex = ref('1')
+    const activeIndex = ref(1)
     const username = store.state.userInfo.username
-
 
     const handleSelect = (key, keyPath) => {
         console.log(key, keyPath)
     }
 
-    
     const loginOut = () => {
         store.commit('updateLoginStatus')
         router.push('/login')
