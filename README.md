@@ -69,9 +69,31 @@ vue3 语法学习
 ```
 2. emit 引入
 ```js
-const emit = defineEmits(['update-my-visible']);
+const emit = defineEmits(['update-value']);
+const updateValue = (val) => {
+   emit('update-value', val)
+}
 ```
-3. 
+3. 定义 let leftMenu = reactive([])，关于直接对 leftMenu 数组赋值时会让它本身失去响应式
+   解决办法
+// 方案1：创建一个响应式对象，对象的属性是数组
+```js
+const state = reactive({
+    arr: []
+});
+state.arr = [1, 2, 3]
+```
+ini复制代码// 方案2: 使用 ref 函数
+```js
+const state = ref([])
+state.value = [1, 2, 3]
+```
+ini复制代码方案3: 使用数组的push方法
+```js
+const arr = reactive([])
+arr.push(...[1, 2, 3])
+```
+
 
 ### 还没解决的问题
 1. 无

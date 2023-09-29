@@ -8,7 +8,8 @@
       active-text-color="#ffd04b"
       @select="handleSelect"
     >
-      <el-menu-item v-for="item in menu_top_config" :key="item.value" :index="item.value.toString()">
+      <el-menu-item v-for="item in menu_top_config" :key="item.value" :index="item.value.toString()"
+        @click="updateValue(item.value)" >
         <el-icon> <component :is="item.icon" style="width: 20px; height:20px;"/> </el-icon>
         <span>{{ item.label }}</span>
       </el-menu-item>
@@ -24,7 +25,7 @@
 <script lang="js" setup>
     import { useStore } from 'vuex'
     import { useRouter } from 'vue-router';
-    import { ref } from 'vue'
+    import { ref, defineEmits } from 'vue'
 
     import { menu_top_config } from '@/common/config/menu_top_config'
 
@@ -32,11 +33,15 @@
     const store = useStore()
     const router = useRouter()
 
-    const activeIndex = ref(1)
+    const activeIndex = ref("1")
     const username = store.state.userInfo.username
 
-    const handleSelect = (key, keyPath) => {
-        console.log(key, keyPath)
+    const emit = defineEmits(['update-menu-value']);
+    const updateValue = (val) => {
+      emit('update-menu-value', val);
+    }
+    const handleSelect = () => {
+        // console.log(key, keyPath)
     }
 
     const loginOut = () => {

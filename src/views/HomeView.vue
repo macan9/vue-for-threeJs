@@ -1,11 +1,11 @@
 <template>
   <div class="home">
 
-    <MenuForTop />
+    <MenuForTop @update-menu-value="setMenuValue" />
 
     <div class="display-flex">
 
-      <MenuForLeft />
+      <MenuForLeft :topMenuValue="topMenuValue" />
 
       <div class="main-display">
         <router-view/>
@@ -20,6 +20,7 @@
 // @ is an alias to /src
 import MenuForTop from '@/components/menu/MenuForTop.vue'
 import MenuForLeft from '@/components/menu/MenuForLeft.vue'
+import { ref } from 'vue';
 
 
 export default {
@@ -30,10 +31,18 @@ export default {
   },
   setup(){
 
+    const topMenuValue = ref('1')
+    
     const getMockData = () => {
     }
+    const setMenuValue = (val) => {
+      topMenuValue.value = val
+    }
+
     return {
-      getMockData
+      topMenuValue,
+      getMockData,
+      setMenuValue,
     };
   }
 }
