@@ -11,11 +11,23 @@
     
     
     <template v-for="item in leftMenu" :key="item.value">
-      <template v-if="leftMenu.children && leftMenu.children.length">
 
+      <!-- 存在子路由 -->
+      <template v-if="item.children && item.children.length">
+        <el-sub-menu :index="item.value.toString()">
+          <template #title>
+            <el-icon><location /></el-icon>
+            <span>{{ item.label }}</span>
+          </template>
+          <el-menu-item v-for="child in item.children" :key="child.value" :index="item.value.toString()"
+           @click="router.push(child.path)">
+            {{ child.label }}
+          </el-menu-item>
+        </el-sub-menu>
       </template>
+      <!-- 不存在子路由 -->
       <template v-else>
-        <el-menu-item :index="item.value.toString()" @click="router.push('/BlogMain')">
+        <el-menu-item :index="item.value.toString()" @click="router.push(item.path)">
           <el-icon><component :is="item.icon"/></el-icon>
           <span>{{ item.label }}</span>
         </el-menu-item>
@@ -23,54 +35,41 @@
 
     </template>
 
-    <!-- <el-menu-item  index="2" @click="router.push('/UserEdit')">
-      <el-icon><icon-menu /></el-icon>
-      <span>用户管理</span>
-    </el-menu-item> -->
-
-
-    
-
-    <el-sub-menu index="1">
-      <template #title>
-        <el-icon><location /></el-icon>
-        <span>Navigator One</span>
-      </template>
-      <!-- <el-menu-item-group>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title>item four</template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu> -->
-    </el-sub-menu>
-
-
   </el-menu>
 </template>
   
   <script lang="js" setup>
     import { menu_left_config } from '@/common/config/menu_left_config'
     import { useRouter } from 'vue-router';
-    import { ref, reactive } from 'vue';
+    import { ref , watch } from 'vue';
+    import {  defineProps, toRef } from 'vue'
     const router = useRouter();
 
    
-    const topMenuValue = ref(1)
-    let leftMenu = reactive([])
+    const props = defineProps({
+      topMenuValue: {
+        type: String,
+        default: '1',
+      },
+    });
+    const topMenuValue  = toRef(props,'topMenuValue')
+
+    const leftMenu = ref([])
+
+    watch(() => topMenuValue.value, (newValue) => {
+        useMenu()
+        console.log(`topMenuValue 变为 ${newValue}`);
+        console.log(`leftMenu 变为 ${leftMenu.value}`);
+    });
 
     const useMenu = () => {
       console.log(topMenuValue.value,menu_left_config,'topMenuValue')
       menu_left_config.map(i=>{
         if(i.pid == topMenuValue.value){
-          i.children && (leftMenu = i.children)
+          i.children && (leftMenu.value = i.children)
         }
       })
-      console.log(leftMenu,'leftMenu')
+      // console.log(leftMenu.value,'leftMenu')
     }
     useMenu()
 
