@@ -21,6 +21,10 @@ const routes = [
         path: 'userEdit',
         name: 'userEdit',
         component: () => import('@/components/user/UserEdit.vue')
+      },{
+        path: 'leafletMap',
+        name: 'leafletMap',
+        component: () => import('@/views/leafletMap/LeafletMap.vue')
       }
     ]
   },

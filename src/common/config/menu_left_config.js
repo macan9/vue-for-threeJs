@@ -33,11 +33,11 @@ export const menu_left_config = [
             {
                 label: "地图展示",
                 value: '2-1',
-                path: "/BlogMain",
+                path: "/LeafletMap",
                 icon: "House"
             },{
                 label: "点位添加",
-                value: '2-1',
+                value: '2-2',
                 path: "/BlogMain",
                 icon: "House"
             }

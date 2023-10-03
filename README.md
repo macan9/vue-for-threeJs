@@ -83,7 +83,7 @@ const state = reactive({
 });
 state.arr = [1, 2, 3]
 ```
-ini复制代码// 方案2: 使用 ref 函数
+ini复制代码// 方案2: 使用 ref 函数 
 ```js
 const state = ref([])
 state.value = [1, 2, 3]
@@ -92,6 +92,13 @@ ini复制代码方案3: 使用数组的push方法
 ```js
 const arr = reactive([])
 arr.push(...[1, 2, 3])
+```
+4. 将 proxy 数组对象转化为 可读数组
+```js
+const leftMenu = reactive({
+      leftMenuVal:[]
+    })
+const target = Array.from(leftMenu.leftMenuVal);
 ```
 
 
