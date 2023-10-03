@@ -10,7 +10,7 @@
   >  
     
     
-    <template v-for="item in leftMenu" :key="item.value">
+    <template v-for="item in leftMenu.leftMenuVal" :key="item.value">
 
       <!-- 存在子路由 -->
       <template v-if="item.children && item.children.length">
@@ -41,7 +41,7 @@
   <script lang="js" setup>
     import { menu_left_config } from '@/common/config/menu_left_config'
     import { useRouter } from 'vue-router';
-    import { ref , watch } from 'vue';
+    import { reactive , watch } from 'vue';
     import {  defineProps, toRef } from 'vue'
     const router = useRouter();
 
@@ -54,21 +54,28 @@
     });
     const topMenuValue  = toRef(props,'topMenuValue')
 
-    const leftMenu = ref([])
+    const leftMenu = reactive({
+      leftMenuVal:[]
+    })
 
-    watch(() => topMenuValue.value, (newValue) => {
+    watch(() => topMenuValue.value, () => {
         useMenu()
-        console.log(`topMenuValue 变为 ${newValue}`);
-        console.log(`leftMenu 变为 ${leftMenu.value}`);
     });
 
     const useMenu = () => {
       console.log(topMenuValue.value,menu_left_config,'topMenuValue')
       menu_left_config.map(i=>{
         if(i.pid == topMenuValue.value){
-          i.children && (leftMenu.value = i.children)
+          i.children && (leftMenu.leftMenuVal = i.children)
         }
       })
+
+      // 将 proxy 数组对象转化为 可读数组
+      const target = Array.from(leftMenu.leftMenuVal);
+      if(target.length){
+        console.log(leftMenu.leftMenuVal,'leftMenu.leftMenuVal')
+        router.push(target[0].path)
+      }
       // console.log(leftMenu.value,'leftMenu')
     }
     useMenu()
