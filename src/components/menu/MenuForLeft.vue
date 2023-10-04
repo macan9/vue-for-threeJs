@@ -16,7 +16,7 @@
       <template v-if="item.children && item.children.length">
         <el-sub-menu :index="item.value.toString()">
           <template #title>
-            <el-icon><location /></el-icon>
+            <el-icon><component :is="item.icon"/></el-icon>
             <span>{{ item.label }}</span>
           </template>
           <el-menu-item v-for="child in item.children" :key="child.value" :index="item.value.toString()"
