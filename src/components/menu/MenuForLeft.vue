@@ -3,7 +3,7 @@
     active-text-color="#ffd04b"
     background-color="#545c64"
     class="el-menu-vertical-demo"
-    default-active="1"
+    :default-active='defaultActiveMenu'
     text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
@@ -19,7 +19,7 @@
             <el-icon><component :is="item.icon"/></el-icon>
             <span>{{ item.label }}</span>
           </template>
-          <el-menu-item v-for="child in item.children" :key="child.value" :index="item.value.toString()"
+          <el-menu-item v-for="child in item.children" :key="child.value" :index="child.value.toString()"
            @click="router.push(child.path)">
             {{ child.label }}
           </el-menu-item>
@@ -52,7 +52,9 @@
         default: '1',
       },
     });
+    
     const topMenuValue  = toRef(props,'topMenuValue')
+    let defaultActiveMenu = "1"
 
     const leftMenu = reactive({
       leftMenuVal:[]
@@ -70,11 +72,17 @@
         }
       })
 
-      // 将 proxy 数组对象转化为 可读数组
-      const target = Array.from(leftMenu.leftMenuVal);
+      // 默认选中第一项
+      const target = Array.from(leftMenu.leftMenuVal); // 将 proxy 数组对象转化为 可读数组
       if(target.length){
-        console.log(leftMenu.leftMenuVal,'leftMenu.leftMenuVal')
-        router.push(target[0].path)
+        let targetItem
+        if(target[0].children && target[0].children.length){
+          targetItem = target[0].children[0]
+        }else{
+          targetItem = target[0]
+        }
+        router.push(targetItem.path)
+        defaultActiveMenu = targetItem.value
       }
       // console.log(leftMenu.value,'leftMenu')
     }
