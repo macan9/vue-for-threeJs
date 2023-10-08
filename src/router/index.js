@@ -12,24 +12,24 @@ const routes = [
     component: HomeView,
     children: [
       {
-        path: 'blogMain',
+        path: '/blogMain',
         name: 'blogMain',
         component: () => import('@/views/blogSystem/BlogMain.vue')
       },
       {
-        path: 'userEdit',
+        path: '/userEdit',
         name: 'userEdit',
         component: () => import('@/components/user/UserEdit.vue')
       },{
-        path: 'leafletMap',
+        path: '/leafletMap',
         name: 'leafletMap',
         component: () => import('@/views/leafletMap/LeafletMap.vue')
       },{
-        path: 'threeGuiBase',
+        path: '/threeGuiBase',
         name: 'threeGuiBase',
         component: () => import('@/views/three/ThreeGuiBase.vue')
       },{
-        path: 'threePlanet',
+        path: '/threePlanet',
         name: 'threePlanet',
         component: () => import('@/views/three/ThreePlanet.vue')
       }
@@ -53,19 +53,19 @@ const router = createRouter({
 })
 
 
-// import { useStore } from 'vuex'
-// router.beforeEach((to,from,next) => {
-//   // 全局前置守卫，会在每个路由导航之前调用
-//   const store = useStore()
-//   const loginStatus = store.state.loginStatus
-//   // console.log('router beforeEach',from,to,loginStatus)
-//   if (to.name!='login'&&!loginStatus) {
-//     console.log('用户未登录')
-//     // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面
-//     next({ name: 'login' })
-//   } else{
-//     next()
-//   }
-// })
+
+
+router.beforeEach((to,from,next) => {
+  // 全局前置守卫，会在每个路由导航之前调用
+  const loginStatus = localStorage.getItem('loginStatus');
+  console.log('router beforeEach',from,to,loginStatus)
+  if (to.name!='login'&&!loginStatus) {
+    console.log('用户未登录')
+    // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面
+    next({ name: 'login' })
+  }else{
+    next()
+  }
+})
 
 export default router
