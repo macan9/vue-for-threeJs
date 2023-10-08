@@ -30,11 +30,14 @@ const guiConfiguration = {
   sphere3Color: '#ffae23',
 }
 function init() {
+
   // 定义场景
   scene = new THREE.Scene()
+
   // 给场景添加雾化效果
   // scene.fog = new THREE.Fog(0x123, 5, 10);
   // scene.fog = new THREE.FogExp2(0xffffff, 0.004);
+
   // 定义摄像机
   camera = new THREE.PerspectiveCamera(
     45,
@@ -42,17 +45,22 @@ function init() {
     0.1,
     1000,
   )
+
   // 创建坐标系
   createAxes()
+
   // 创建平面
   createPlane()
+
   // 创建光源
   createLight()
 
+  // 创建模型
   createSphere()
 
   // 创建渲染器,放最后
   createRenderer()
+  
 }
 
 // 创建球体
