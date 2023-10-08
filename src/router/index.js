@@ -10,7 +10,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
-    redirect:'/blogMain',
     children: [
       {
         path: 'blogMain',
@@ -54,20 +53,19 @@ const router = createRouter({
 })
 
 
-import { useStore } from 'vuex'
-router.beforeEach((to,from,next) => {
-  // 全局前置守卫，会在每个路由导航之前调用
-  const store = useStore()
-  const loginStatus = store.state.loginStatus
-  // console.log('router beforeEach',from,to,loginStatus)
-  if (to.name!='login'&&!loginStatus) {
-    console.log('用户未登录')
-    // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面
-    // next({ name: 'login' })
-    next()
-  } else{
-    next()
-  }
-})
+// import { useStore } from 'vuex'
+// router.beforeEach((to,from,next) => {
+//   // 全局前置守卫，会在每个路由导航之前调用
+//   const store = useStore()
+//   const loginStatus = store.state.loginStatus
+//   // console.log('router beforeEach',from,to,loginStatus)
+//   if (to.name!='login'&&!loginStatus) {
+//     console.log('用户未登录')
+//     // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面
+//     next({ name: 'login' })
+//   } else{
+//     next()
+//   }
+// })
 
 export default router
