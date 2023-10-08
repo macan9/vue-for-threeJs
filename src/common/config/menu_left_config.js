@@ -38,7 +38,7 @@ export const menu_left_config = [
             },{
                 label: "点位添加",
                 value: '2-2',
-                path: "/BlogMain",
+                path: "/UserEdit",
                 icon: "House"
             }
         ] 
@@ -48,7 +48,12 @@ export const menu_left_config = [
             {
                 label: "场景演示",
                 value: '3-1',
-                path: "/UserEdit",
+                path: "/ThreeGuiBase",
+                icon: "House"
+            },{
+                label: "行星示例",
+                value: '3-2',
+                path: "/ThreePlanet",
                 icon: "House"
             },
         ] 

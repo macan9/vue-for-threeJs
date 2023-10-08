@@ -25,6 +25,14 @@ const routes = [
         path: 'leafletMap',
         name: 'leafletMap',
         component: () => import('@/views/leafletMap/LeafletMap.vue')
+      },{
+        path: 'threeGuiBase',
+        name: 'threeGuiBase',
+        component: () => import('@/views/three/ThreeGuiBase.vue')
+      },{
+        path: 'threePlanet',
+        name: 'threePlanet',
+        component: () => import('@/views/three/ThreePlanet.vue')
       }
     ]
   },
@@ -55,7 +63,8 @@ router.beforeEach((to,from,next) => {
   if (to.name!='login'&&!loginStatus) {
     console.log('用户未登录')
     // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面
-    next({ name: 'login' })
+    // next({ name: 'login' })
+    next()
   } else{
     next()
   }
