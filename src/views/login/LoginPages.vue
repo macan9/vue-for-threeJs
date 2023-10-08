@@ -16,7 +16,7 @@
 <script> 
 import { ref, reactive} from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex'
+// import { useStore } from 'vuex'
 
 import { loginReq } from "@/apis/login.js"
 import { ElMessage } from 'element-plus'
@@ -29,7 +29,7 @@ export default {
         let dialogVisible_ = reactive({attr:false})
         
         
-        const store = useStore()
+        // const store = useStore()
         const router = useRouter();
 
         const openRigsterPage = () => {
@@ -50,8 +50,12 @@ export default {
                     type: 'success',
                 })
                 
-                store.commit('updateLoginStatus')
-                store.commit('updateUserInfo',data)
+                // store.commit('updateLoginStatus')
+                // store.commit('updateUserInfo',data)
+                const userInfo = JSON.stringify(data)
+                localStorage.setItem('loginStatus', 'true');
+                localStorage.setItem('userInfo', userInfo);
+
                 router.push('/blogMain')   
             }else{
                 ElMessage({

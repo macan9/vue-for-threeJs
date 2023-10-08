@@ -23,19 +23,20 @@
 </template>
   
 <script lang="js" setup>
-    import { useStore } from 'vuex'
+    // import { useStore } from 'vuex'
     import { useRouter } from 'vue-router';
     import { ref, defineEmits } from 'vue'
 
     import { menu_top_config } from '@/common/config/menu_top_config'
 
     
-    const store = useStore()
+    // const store = useStore()
     const router = useRouter()
 
     const activeIndex = ref("1")
-    const username = store.state.userInfo.username
-
+    // const username = store.state.userInfo.username
+    const userInfo = localStorage.getItem('userInfo');
+    const username = JSON.parse(userInfo).username
     const emit = defineEmits(['update-menu-value']);
     const updateValue = (val) => {
       emit('update-menu-value', val);
@@ -45,7 +46,9 @@
     }
 
     const loginOut = () => {
-        store.commit('updateLoginStatus')
+        // store.commit('updateLoginStatus')
+        localStorage.setItem('loginStatus', '');
+        localStorage.setItem('userInfo', '');
         router.push('/login')
     }
 
