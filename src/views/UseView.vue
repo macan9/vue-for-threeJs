@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="use-home">
 
     <MenuForTop @update-menu-value="setTopMenuValue" />
 
@@ -8,7 +8,7 @@
       <MenuForLeft :topMenuValue="topMenuValue" />
 
       <div class="main-display">
-        <router-view/>
+        xxx
       </div>
       
     </div>
@@ -54,7 +54,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.home{
+.use-home{
   height: 100%;
   .display-flex{
     height: calc(100% - 60px);
@@ -65,7 +65,7 @@ export default {
     padding: 10px;
   }
   // 子页面样式1
-  .home-view-page{
+  .use-home-view-page{
      border: 1px solid gainsboro;
      border-radius: 5px;
      box-shadow: 2px 2px 8px gray;

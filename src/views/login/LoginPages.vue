@@ -18,14 +18,14 @@ import { ref, reactive} from 'vue';
 import { useRouter } from 'vue-router';
 // import { useStore } from 'vuex'
 
-import { loginReq } from "@/apis/login.js"
+import { loginReq } from "@/apis/userApis.js"
 import { ElMessage } from 'element-plus'
 import UserRegister from '@/components/user/UserRegister.vue'
 export default {
     components: { UserRegister },
     setup(){
         const username = ref('admin');
-        const password = ref('123123');
+        const password = ref('123456');
         let dialogVisible_ = reactive({attr:false})
         
         
@@ -43,26 +43,20 @@ export default {
                 password:password.value 
             }
             const { data } = await loginReq(userData)
-
-            if(data.status == 200){
+            console.log(data,'loginReq')
+            if(data){
                 ElMessage({
-                    message: data.message,
+                    message: "登录成功，欢迎！",
                     type: 'success',
                 })
                 
                 // store.commit('updateLoginStatus')
                 // store.commit('updateUserInfo',data)
-                const userInfo = JSON.stringify(data)
+                const userData = JSON.stringify(data)
                 localStorage.setItem('loginStatus', 'true');
-                localStorage.setItem('userInfo', userInfo);
+                localStorage.setItem('userInfo', userData);
 
                 router.push('/blogMain')   
-            }else{
-                ElMessage({
-                    message: data.message,
-                    type: 'error',
-                })
-                return
             }
         }
 
