@@ -7,10 +7,11 @@
     text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
+    @select="selectMenuAfter"
   >  
     
     
-    <template v-for="item in leftMenu.leftMenuVal" :key="item.value">
+    <template v-for="item in leftMenu.leftMenuTree" :key="item.value">
 
       <!-- 存在子路由 -->
       <template v-if="item.children && item.children.length">
@@ -41,39 +42,45 @@
   <script lang="js" setup>
     import { menu_left_config } from '@/common/config/menu_left_config'
     import { useRouter } from 'vue-router';
-    import { reactive , watch } from 'vue';
-    import {  defineProps, toRef } from 'vue'
+    import { reactive , watch} from 'vue';
+    import {  defineProps, toRef} from 'vue'
     const router = useRouter();
 
-   
+    // data
     const props = defineProps({
       topMenuValue: {
         type: String,
         default: '1',
       },
     });
-    
     const topMenuValue  = toRef(props,'topMenuValue')
+
     let defaultActiveMenu = "1"
 
     const leftMenu = reactive({
-      leftMenuVal:[]
+      leftMenuTree:[]
     })
 
     watch(() => topMenuValue.value, () => {
-        useMenu()
+      useMenu()
+      selectFirstMenu()
     });
 
+    
+    // methods
+    // topMenuValue 和 defaultActiveMenu 都需要存储在 localStorage, 当页面重载时读取，当页面销毁时存储
     const useMenu = () => {
-      console.log(topMenuValue.value,menu_left_config,'topMenuValue')
+      // console.log(topMenuValue.value,menu_left_config,'topMenuValue')
       menu_left_config.map(i=>{
         if(i.pid == topMenuValue.value){
-          i.children && (leftMenu.leftMenuVal = i.children)
+          i.children && (leftMenu.leftMenuTree = i.children)
         }
       })
+    }
 
+    const selectFirstMenu = () =>{
       // 默认选中第一项
-      const target = Array.from(leftMenu.leftMenuVal); // 将 proxy 数组对象转化为 可读数组
+      const target = Array.from(leftMenu.leftMenuTree); // 将 proxy 数组对象转化为 可读数组
       if(target.length){
         let targetItem
         if(target[0].children && target[0].children.length){
@@ -84,18 +91,52 @@
         router.push(targetItem.path)
         defaultActiveMenu = targetItem.value
       }
-      // console.log(leftMenu.value,'leftMenu')
     }
-    useMenu()
 
-    
+    const setActiveMenu = () => {
+      const activeLeftMenu = localStorage.getItem('activeLeftMenu')
+      if(activeLeftMenu) {
+        // 递归找出对应 item，如果存在跳转并设置默认值
+        findMenu( activeLeftMenu, leftMenu.leftMenuTree )
+      }else{
+        selectFirstMenu()
+      }
+    }
 
+    const findMenu = (key,tree) => {
+      if(!tree){
+        // 未匹配到结果 终止递归
+        selectFirstMenu()
+        return
+      }
+      tree.map(i=>{
+        if(i.value===key){
+          // 匹配到结果终止递归
+          router.push(i.path)
+          defaultActiveMenu = i.value
+          return
+        }
+        if(i.children){
+          findMenu(key,i.children)
+        }
+      })
+    }
+
+    const selectMenuAfter = (index,indexPath,item)=>{
+      console.log( index, indexPath,item, 'indexPath')
+      localStorage.setItem('activeLeftMenu',index)
+    }
     const handleOpen = (key, keyPath) => {
       console.log(key, keyPath)
     }
     const handleClose = (key, keyPath) => {
       console.log(key, keyPath)
     }
+
+    // 初始化调用
+    useMenu()
+    setActiveMenu()
+
   </script>
 
   <style lang="scss">

@@ -33,10 +33,10 @@
     // const store = useStore()
     const router = useRouter()
 
-    const activeIndex = ref("1")
+    const menuVal = localStorage.getItem('topMenuValue')
+    const activeIndex = menuVal ? ref(menuVal) : ref('1')
     // const username = store.state.userInfo.username
-    const userInfo = localStorage.getItem('userInfo');
-    const username = JSON.parse(userInfo).username
+    
     const emit = defineEmits(['update-menu-value']);
     const updateValue = (val) => {
       emit('update-menu-value', val);
@@ -45,6 +45,8 @@
         // console.log(key, keyPath)
     }
 
+    const userInfo = localStorage.getItem('userInfo');
+    const username = JSON.parse(userInfo).username
     const loginOut = () => {
         // store.commit('updateLoginStatus')
         localStorage.setItem('loginStatus', '');
