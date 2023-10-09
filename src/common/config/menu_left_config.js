@@ -23,7 +23,7 @@ export const menu_left_config = [
             },{
                 label: "用户管理",
                 value: '1-2',
-                path: "/UserEdit",
+                path: "/userTable",
                 icon: "House"
             },
         ] 

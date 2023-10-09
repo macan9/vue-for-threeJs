@@ -19,7 +19,11 @@ const routes = [
       {
         path: '/userEdit',
         name: 'userEdit',
-        component: () => import('@/components/user/UserEdit.vue')
+        component: () => import('@/views/userManage/UserEdit.vue')
+      },{
+        path: '/userTable',
+        name: 'userTable',
+        component: () => import('@/views/userManage/UserTable.vue')
       },{
         path: '/leafletMap',
         name: 'leafletMap',
@@ -38,7 +42,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/UseView.vue')
   },
   {
     path: '/login',

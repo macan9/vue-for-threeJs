@@ -5,7 +5,7 @@ export const userList = [
         authority: 0
     },{ 
         username: 'admin' ,
-        password: '123123',
+        password: '123456',
         authority: 1
     },{ 
         username: 'mc' ,
