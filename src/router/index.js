@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/homePage/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
   },
   {
     path: '/login',
@@ -58,7 +58,7 @@ const router = createRouter({
 router.beforeEach((to,from,next) => {
   // 全局前置守卫，会在每个路由导航之前调用
   const loginStatus = localStorage.getItem('loginStatus');
-  console.log('router beforeEach',from,to,loginStatus)
+  // console.log('router beforeEach',from,to,loginStatus)
   if (to.name!='login'&&!loginStatus) {
     console.log('用户未登录')
     // 如果访问需要身份验证的页面，而用户未登录，则重定向到登录页面

@@ -5,13 +5,13 @@ export const menu_left_config = [
             {
                 label: "我的主页",
                 value: '1-1',
-                path: "/BlogMain",
+                path: "/blogMain",
                 icon: "House",
                 children:[
                     {
                         label: "我的简历",
                         value: '1-1-1',
-                        path: "/BlogMain",
+                        path: "/blogMain",
                         icon: "House"
                     },{
                         label: "我的博客",
@@ -63,7 +63,7 @@ export const menu_left_config = [
             {
                 label: "博客管理",
                 value: "4-1",
-                path: "/BlogMain",
+                path: "/blogMain",
                 icon: "House"
             }
         ] 
@@ -83,7 +83,7 @@ export const menu_left_config = [
             {
                 label: "聊天房间",
                 value: "6-1",
-                path: "/BlogMain",
+                path: "/blogMain",
                 icon: "House"
             }
         ] 

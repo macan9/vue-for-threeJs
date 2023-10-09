@@ -20,17 +20,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 
 
-// app.mixin({
-//   beforeUnmount() {
-//     sessionStorage.setItem('currentPath', this.$route.path);
-//   },
-// });
-// // 在路由初始化前检查 sessionStorage，并恢复之前存储的 currentPath
-// const savedPath = sessionStorage.getItem('currentPath');
-// if (savedPath) {
-//   router.push(savedPath);
-// }
-
-
 app.use(router).use(store).use(ElementPlus).mount('#app')
 
