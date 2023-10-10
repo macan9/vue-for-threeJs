@@ -1,54 +1,36 @@
 <template>
   <div class="use-home">
 
-    <MenuForTop @update-menu-value="setTopMenuValue" />
-
-    <div class="display-flex">
-
-      <MenuForLeft :topMenuValue="topMenuValue" />
+  
 
       <div class="main-display">
-        xxx
+        <div>use</div> 
+        <el-button @click="routeBack"> 返回 </el-button>
       </div>
       
-    </div>
+
     
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MenuForTop from '@/components/menu/MenuForTop.vue'
-import MenuForLeft from '@/components/menu/MenuForLeft.vue'
-import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router'
+
 
 
 export default {
-  name: 'HomeView',
+  name: 'UseView',
   components: {
-    MenuForTop,
-    MenuForLeft,
+
   },
   setup(){
-
-    const menuVal = localStorage.getItem('topMenuValue')
-    const topMenuValue = menuVal ? ref(menuVal) : ref('1')
-
-    const setTopMenuValue = (val) => {
-      topMenuValue.value = val
-    }
-
-    watch(() => topMenuValue.value, () => {
-        localStorage.setItem('topMenuValue',topMenuValue.value)
-    });
-
-    const getMockData = () => {
-    }
-
+    const router = useRouter()
+    const routeBack =()=>{
+      router.push('/blogMain')
+    } 
     return {
-      topMenuValue,
-      getMockData,
-      setTopMenuValue,
+      routeBack
     };
   }
 }

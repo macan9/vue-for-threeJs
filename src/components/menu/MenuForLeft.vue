@@ -95,6 +95,12 @@
 
     const setActiveMenu = () => {
       const activeLeftMenu = localStorage.getItem('activeLeftMenu')
+      // 特殊情况不执行 自动菜单跳转
+      const spcialMenu = ['1-1-2']
+      console.log(activeLeftMenu,'activeLeftMenu')
+      if(spcialMenu.indexOf(activeLeftMenu)>-1){
+        return
+      }
       if(activeLeftMenu) {
         // 递归找出对应 item，如果存在跳转并设置默认值
         findMenu( activeLeftMenu, leftMenu.leftMenuTree )
@@ -142,7 +148,7 @@
   <style lang="scss">
     .el-menu-vertical-demo{
       height: 100%;
-      width: 230px;
+      width: 140px;
     }
   </style>
   

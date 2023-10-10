@@ -1,17 +1,25 @@
 <template>
     <div class="home-view-page user-table">
-
-        <div class="user-header">
-            <el-button size="small" type="success" @click="handleAdd(scope.$index, scope.row)">Add</el-button>
+        <div class="home-view-title">
+            <div class="page-title">用户管理</div>
         </div>
+       
 
         <div class="user-main">
+            <div class="user-header">
+                <el-button size="small" type="success" @click="handleAdd()">Add</el-button>
+                <el-button size="small" type="success" @click="getUserData()">upDate</el-button>
+            </div>
             <el-table :data="filterTableData" style="width: 100%">
                 <el-table-column label="用户名" prop="username" />
                 <el-table-column label="昵称" prop="nickname" />
-                <el-table-column label="邮箱" prop="email" />
+                <el-table-column label="邮箱" prop="email" width="200" />
                 <el-table-column label="手机号" prop="mobile" />
-                <el-table-column label="性别" prop="sex" />
+                <el-table-column label="性别" prop="sex" width="80">
+                    <template #default="scope">
+                        {{scope.row.sex?"女":"男"}}
+                    </template>
+                </el-table-column>
                 <el-table-column label="个性签名" prop="description" />
                 <el-table-column align="right">
                     <template #header>
@@ -19,7 +27,8 @@
                     </template>
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete
+                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">
+                            Delete
                         </el-button>
                     </template>
                 </el-table-column>
@@ -27,17 +36,28 @@
         </div>
 
         <div class="user-bottom"></div>
-        
+
+        <UserRegister @update-user-data="getUserData" :dialogVisible="dialogAddVisible"></UserRegister>
+        <UserEdit v-if="dialogEditVisible.attr" :dialogVisible="dialogEditVisible" 
+         @update-user-data="getUserData" :userId="userId"></UserEdit>
     </div>
     
 </template>
 
 <script lang="js" setup>
-    import { userListGet } from "@/apis/userApis.js"
-    import { computed, ref } from 'vue'
+    import { userListGet, userDelete } from "@/apis/userApis.js"
+    import { computed, ref, reactive } from 'vue'
+    import { ElMessage, ElMessageBox } from 'element-plus'
+    import UserRegister from '@/components/user/UserRegister.vue'
+    import UserEdit from './UserEdit.vue'
 
 
     const search = ref('')
+    const tableData = ref([]);
+    const userId = ref('')
+    let dialogAddVisible = reactive({attr:false})
+    let dialogEditVisible = reactive({attr:false})
+
     const filterTableData = computed(() =>
         tableData.value.filter(
             (data) =>
@@ -50,20 +70,48 @@
         const  { data } = await userListGet()
         tableData.value = data
     }
-    const tableData = ref([]);
-    getUserData()
 
     const handleEdit = (index, row) => {
         console.log(index, row)
+        dialogEditVisible.attr = true
+        userId.value = row.id
     }
-    const handleDelete = (index, row) => {
+    const handleDelete = async (index, row) => {
         console.log(index, row)
+        ElMessageBox.confirm('确定要删除该用户吗？')
+        .then(async () => {
+            await userDelete(row.id)
+            ElMessage({
+                message: '删除成功',
+                type: 'success',
+            })
+            getUserData()
+        })
+        .catch(() => {
+            // catch error
+        })
+        
+
     }
+    const handleAdd = () => {
+        dialogAddVisible.attr = true
+    }
+
+    getUserData()
 
     
 </script>
 <style lang="scss">
 .user-table{
-    padding: 10px;
+    // padding: 10px;
+    .user-main{
+        padding: 15px;
+    }
+    .user-header{
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        height: 40px;
+    }
 }
 </style>

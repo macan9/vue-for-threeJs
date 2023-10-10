@@ -40,8 +40,8 @@ const routes = [
     ]
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/useView',
+    name: 'useView',
     component: () => import(/* webpackChunkName: "about" */ '@/views/UseView.vue')
   },
   {

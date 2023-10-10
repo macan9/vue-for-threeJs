@@ -16,7 +16,7 @@ export const menu_left_config = [
                     },{
                         label: "我的博客",
                         value: '1-1-2',
-                        path: "/UserEdit",
+                        path: "/UseView",
                         icon: "House"
                     }
                 ]
@@ -24,7 +24,7 @@ export const menu_left_config = [
                 label: "用户管理",
                 value: '1-2',
                 path: "/userTable",
-                icon: "House"
+                icon: "CollectionTag"
             },
         ] 
     },{
@@ -38,7 +38,7 @@ export const menu_left_config = [
             },{
                 label: "点位添加",
                 value: '2-2',
-                path: "/UserEdit",
+                path: "/BlogMain",
                 icon: "House"
             }
         ] 
@@ -73,7 +73,7 @@ export const menu_left_config = [
             {
                 label: "用户简历",
                 value: "5-1",
-                path: "/UserEdit",
+                path: "/BlogMain",
                 icon: "House"
             },
         ] 
@@ -93,12 +93,12 @@ export const menu_left_config = [
             {
                 label: "烟花",
                 value: "7-1",
-                path: "/UserEdit",
+                path: "/BlogMain",
                 icon: "House"
             },{
                 label: "转盘",
                 value: "8-1",
-                path: "/UserEdit",
+                path: "/BlogMain",
                 icon: "House"
             },
         ] 

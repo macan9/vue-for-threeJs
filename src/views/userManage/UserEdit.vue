@@ -1,58 +1,168 @@
 <template>
-    <div class="home-view-page">
-        <el-table :data="filterTableData" style="width: 100%">
-            <el-table-column label="Date" prop="date" />
-            <el-table-column label="Name" prop="name" />
-            <el-table-column align="right">
-                <template #header>
-                    <el-input v-model="search" size="small" placeholder="Type to search" />
-                </template>
-                <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete
-                    </el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </div>
+    <el-dialog
+    v-model="visible.attr"
+    title="用户编辑"
+    width="80%"
+    :before-close="handleClose"
+    :modal="false"
+    class="user-edit-style"
+  >
+    <el-form :model="userForm" ref="userRuleFormRef" :rules="userRules" label-width="120px">
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="userForm.username" style="width: 200px"/>
+      </el-form-item>
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="userForm.nickname" style="width: 200px"/>
+      </el-form-item>
+      <!-- <el-form-item label="新密码" prop="password">
+        <el-input type="password" v-model="userForm.password" style="width: 200px" />
+      </el-form-item>
+      <el-form-item label="确认密码" prop="password">
+        <el-input type="password" v-model="userForm.check_password" style="width: 200px" />
+      </el-form-item> -->
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="userForm.email" style="width: 200px" />
+      </el-form-item>
+      <el-form-item label="手机号" prop="mobile">
+        <el-input v-model="userForm.mobile" style="width: 200px" />
+      </el-form-item>
+      <el-form-item label="个性签名" prop="mobile">
+        <el-input v-model="userForm.description" type="textarea" style="width: 300px" />
+      </el-form-item>
+
+      <el-form-item label="用户权限" prop="role">
+        <el-select v-model="userForm.role" placeholder="请选择用户类型">
+          <el-option v-for="item in user_authority" :label="item.label" :value="item.value" :key="item.value"/>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" round @click="closeDialog" >Cancel</el-button>
+        <el-button type="success" round @click="registerUser(userRuleFormRef)" >
+            Modification
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="js" setup>
-import { computed, ref } from 'vue'
-const search = ref('')
-const filterTableData = computed(() =>
-    tableData.filter(
-        (data) =>
-            !search.value ||
-            data.name.toLowerCase().includes(search.value.toLowerCase())
-    )
-)
-const handleEdit = (index, row) => {
-    console.log(index, row)
-}
-const handleDelete = (index, row) => {
-    console.log(index, row)
-}
-const tableData = [
-    {
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
+  import { defineProps, toRef, ref,reactive,defineEmits} from 'vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  import { userInfoGet, userInfoPut } from '@/apis/userApis.js'
+  import { user_authority } from '@/common/plugins/user_config.js'
+
+  const emit = defineEmits(['update-user-data']);
+  
+  const props = defineProps({
+    dialogVisible: {
+      type: Object,
+      default: () => {},
     },
-    {
-        date: '2016-05-02',
-        name: 'John',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-04',
-        name: 'Morgan',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Jessy',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]
+    userId: {
+      type:String,
+      default:''
+    }
+  });
+  const visible = toRef(props,'dialogVisible')
+  const userId = toRef(props,'userId')
+  console.log(visible,'visible')
+
+
+  let userForm = reactive({})
+  let userOldData = {}
+  const getUserInfo = async() => {
+    const { data } = await userInfoGet(userId.value)
+    userOldData = data
+    Object.assign(userForm, data);
+  }
+
+  const handleClose = (done) => {
+    ElMessageBox.confirm('Are you sure to close this dialog?')
+      .then(() => {
+        
+        done()
+      })
+      .catch(() => {
+        // catch error
+      })
+  }
+
+  const closeDialog = () =>{
+    emit('update-user-data')
+    visible.value.attr = false
+  }
+
+  const userRuleFormRef = ref(null)
+
+  const userRules = reactive({
+    username: [
+      { required: true, message: 'Please input Activity name', trigger: 'blur' },
+      { min: 2, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    ],
+    password: [
+      {
+        required: true,
+        message: 'Please select Activity zone',
+        trigger: 'change',
+      },
+    ],
+  })
+
+  const registerUser = async  (formEl) => {
+    console.log(formEl,'formEl')
+    if (!formEl) return
+    await formEl.validate(async (valid, fields)=>{
+      console.log(userRuleFormRef)
+      if (valid) {
+        console.log('submit!')
+        // 对比 userOldData 和 userForm 的不同项
+        const newData = findDifProperties(userOldData,userForm)
+        await userInfoPut(userId.value,newData)
+
+        ElMessage({
+            message: '修改成功',
+            type: 'success',
+        })
+        closeDialog()
+      } else {
+        console.log('error submit!', fields)
+        // 校验不通过，提示错误信息
+        // ...
+      }
+    })
+  }
+
+  const findDifProperties = (o,u) => {
+    const diffObj = {};
+
+    for (let key in u) {
+        if (Object.prototype.hasOwnProperty.call(o, key) && o[key] !== u[key]) {
+        diffObj[key] = u[key];
+        }
+    }
+
+    return diffObj;
+  }
+
+  getUserInfo()
+
 </script>
+
+<style lang="scss">
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+.user-edit-style{
+    margin-top: 15vh;
+    border-radius: 5px;
+  .el-form{
+    width: 400px;
+    margin: 0 auto;
+  }
+  .el-input{
+    width: 200px;
+  }
+}
+</style>
