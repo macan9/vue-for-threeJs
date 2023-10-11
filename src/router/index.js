@@ -36,6 +36,10 @@ const routes = [
         path: '/threePlanet',
         name: 'threePlanet',
         component: () => import('@/views/three/ThreePlanet.vue')
+      },{
+        path: '/imgUpload',
+        name: 'imgUpload',
+        component: () => import('@/components/imgUpload.vue')
       }
     ]
   },
