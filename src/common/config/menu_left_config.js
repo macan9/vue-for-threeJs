@@ -18,6 +18,11 @@ export const menu_left_config = [
                         value: '1-1-2',
                         path: "/UseView",
                         icon: "House"
+                    },{
+                        label: "图片上传",
+                        value: '1-1-3',
+                        path: "/imgUpload",
+                        icon: "House"
                     }
                 ]
             },{
