@@ -13,7 +13,7 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
     import { ref } from 'vue'
     import { ElMessage } from 'element-plus'
     import { Plus } from '@element-plus/icons-vue'
@@ -21,22 +21,19 @@
 
     const imageUrl = ref('')
 
-    const handleAvatarSuccess = (
-    response,
-    uploadFile
-    ) => {
-        imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+    const handleAvatarSuccess = (res,uploadFile) => {
+        imageUrl.value = URL.createObjectURL(uploadFile.raw)
     }
 
     const beforeAvatarUpload = (rawFile) => {
-    if (rawFile.type !== 'image/jpeg') {
-        ElMessage.error('Avatar picture must be JPG format!')
-        return false
-    } else if (rawFile.size / 1024 / 1024 > 2) {
-        ElMessage.error('Avatar picture size can not exceed 2MB!')
-        return false
-    }
-    return true
+      if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
+          ElMessage.error('Avatar picture must be JPG or PNG format!')
+          return false
+      } else if (rawFile.size / 1024 / 1024 > 2) {
+          ElMessage.error('Avatar picture size can not exceed 2MB!')
+          return false
+      }
+      return true
     }
 </script>
 

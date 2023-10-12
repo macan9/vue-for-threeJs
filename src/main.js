@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 使用 mock
-require('./common/mock/index.js') 
+// require('./common/mock/index.js') 
 
 // 定义 app 
 const app = createApp(App)
