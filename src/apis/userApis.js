@@ -1,5 +1,4 @@
-import api from '@/common/requests/axiosInstance.js'
-import { ElMessage } from 'element-plus'
+import { postApi, getApi, delApi, putApi } from '@/common/requests/requests.js'
 
 // 用户登录
 export const loginReq = async (data)=>{
@@ -31,65 +30,24 @@ export const userDelete = async (id)=>{
   return await delApi(`/api/v1/users/delete/${id}/`)
 }
 
-
-
-
-
-
-const postApi = async (url,data)=>{
-  try{
-    const res = await api.post(url,data)
-    return res.data
-  }catch(error){
-    // 处理请求错误
-    console.error(error);
-    ElMessage({
-      message: error.msg,
-      type: 'error',
-    })
+// gitee 头像仓库
+export const uploadUserAvatarReq = async (data,name)=>{
+  const owner = 'mc150324'
+  const repo = 'PicGo'
+  const path = "img"
+  const data_ = {
+    content: data ,
+    access_token: "d18bdb11f5111a41281baef050f7933d",
+    message:"图床测试"
   }
+  return await postApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}`,data_)
 }
 
-const getApi = async (url)=>{
-  try{
-    const res = await api.get(url)
-    return res.data
-  }catch(error){
-    // 处理请求错误
-    console.error(error);
-    ElMessage({
-      message: error.msg,
-      type: 'error',
-    })
-  }
-}
 
-const delApi = async (url)=>{
-  try{
-    const res = await api.delete(url)
-    return res.data
-  }catch(error){
-    // 处理请求错误
-    console.error(error);
-    ElMessage({
-      message: error.msg,
-      type: 'error',
-    })
-  }
-}
 
-const putApi = async (url,data)=>{
-  try{
-    const res = await api.put(url,data)
-    return res.data
-  }catch(error){
-    // 处理请求错误
-    console.error(error);
-    ElMessage({
-      message: error.msg,
-      type: 'error',
-    })
-  }
-}
+
+
+
+
 
 

@@ -2,7 +2,6 @@
     <div class="img-upload">
         <el-upload
             class="avatar-uploader"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -18,11 +17,15 @@
     import { ElMessage } from 'element-plus'
     import { Plus } from '@element-plus/icons-vue'
 
+    import { uploadUserAvatarReq } from '@/apis/userApis.js'
+
 
     const imageUrl = ref('')
 
+ 
     const handleAvatarSuccess = (res,uploadFile) => {
         imageUrl.value = URL.createObjectURL(uploadFile.raw)
+        
     }
 
     const beforeAvatarUpload = (rawFile) => {
@@ -33,8 +36,25 @@
           ElMessage.error('Avatar picture size can not exceed 2MB!')
           return false
       }
-      return true
+      // retun false 可以改成自己的自定义的上传方式
+
+
+      const reader = new FileReader();
+      reader.readAsBinaryString(rawFile);
+      reader.onload = () => {
+        const binaryString = reader.result;
+        const base64String = btoa(binaryString);
+
+        console.log(base64String);
+        uploadUserAvatarReq(base64String,rawFile.name)
+      };
+      
+      return false
     }
+
+  
+
+  
 </script>
 
 <style scoped>
