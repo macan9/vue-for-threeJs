@@ -19,7 +19,7 @@ export const menu_left_config = [
                         path: "/UseView",
                         icon: "House"
                     },{
-                        label: "图片上传",
+                        label: "头像上传",
                         value: '1-1-3',
                         path: "/imgUpload",
                         icon: "House"
