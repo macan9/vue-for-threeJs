@@ -23,12 +23,12 @@
     const imageUrl = ref('')
 
  
-    const handleAvatarSuccess = (res,uploadFile) => {
+    const handleAvatarSuccess =  (res,uploadFile) => {
         imageUrl.value = URL.createObjectURL(uploadFile.raw)
         
     }
 
-    const beforeAvatarUpload = (rawFile) => {
+    const beforeAvatarUpload = async (rawFile) => {
       if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
           ElMessage.error('Avatar picture must be JPG or PNG format!')
           return false
@@ -41,12 +41,13 @@
 
       const reader = new FileReader();
       reader.readAsBinaryString(rawFile);
-      reader.onload = () => {
+      reader.onload = async () => {
         const binaryString = reader.result;
         const base64String = btoa(binaryString);
 
         console.log(base64String);
-        uploadUserAvatarReq(base64String,rawFile.name)
+        await uploadUserAvatarReq(base64String,rawFile.name)
+        ElMessage.success("上传成功！")
       };
       
       return false
