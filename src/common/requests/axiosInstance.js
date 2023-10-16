@@ -2,6 +2,8 @@
 import axios from 'axios'
 // import { globals_config } from '/public/config/globals_config'
 
+import { ElMessage } from 'element-plus'
+import { loginOut } from '@/common/plugins/user_manage_methods'
 
 
 //使用axios下面的create([config])方法创建axios实例，其中config参数为axios最基本的配置信息。
@@ -19,8 +21,8 @@ api.interceptors.request.use(config => {
    if(isGiteeUrl){
       config.baseURL = 'https://gitee.com';
       config.url = config.url.replace('/gitee','')
-      config.headers.token = "c3eb97f4e5538bc7db8df3577db0c527"
-      config.headers['Content-Type'] = 'multipart/form-data; boundary=----WebKitFormBoundaryRP8LAYASHVySFX6r'
+      // config.headers.token = "c3eb97f4e5538bc7db8df3577db0c527"
+      // config.headers['Content-Type'] = 'multipart/form-data; boundary=----WebKitFormBoundaryRP8LAYASHVySFX6r'
    }else{
       const userInfo_str = localStorage.getItem('userInfo')
       if(userInfo_str){
@@ -38,14 +40,24 @@ api.interceptors.request.use(config => {
 })
 
 api.interceptors.response.use(res => {
-    // 我们一般在这里处理，请求成功后的错误状态码 例如状态码是500，404，403
-    // res 是所有相应的信息
-   // console.log(res,'interceptors.response')
+   // 我们一般在这里处理，请求成功后的错误状态码 例如状态码是500，404，403
+   console.log(res,'interceptors.response')
    return res
 }, err => {
     // 服务器响应发生错误时的处理
+    console.log(err,'interceptors.response.err')
+    ElMessage({
+      message: err,
+      type: 'error',
+   })
+    if(err.response.status == 401){
+      
+      loginOut()
+   }
     Promise.reject(err)
 })
+
+
 
 //导出我们建立的axios实例模块，ES6 export用法
 export default api

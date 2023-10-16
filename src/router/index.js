@@ -25,6 +25,10 @@ const routes = [
         name: 'userTable',
         component: () => import('@/views/userManage/UserTable.vue')
       },{
+        path: '/userLog',
+        name: 'userLog',
+        component: () => import('@/views/userManage/UserLog.vue')
+      },{
         path: '/leafletMap',
         name: 'leafletMap',
         component: () => import('@/views/leafletMap/LeafletMap.vue')

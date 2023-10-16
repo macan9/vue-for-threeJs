@@ -1,14 +1,36 @@
 <template>
     <div class="img-upload">
-        <el-upload
-            class="avatar-uploader"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
+
+        <el-upload 
+            action="#"
+            list-type="picture-card"
+            :file-list="fileList"
             :before-upload="beforeAvatarUpload"
+            :http-request="sendImgToBed"
         >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          <el-icon><Plus /></el-icon>
+
+          <template #file="{ file }">
+            <div>
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+              <span class="el-upload-list__item-actions">
+                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                  <el-icon><zoom-in /></el-icon>
+                </span>
+                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
+                  <el-icon><Download /></el-icon>
+                </span>
+                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+                  <el-icon><Delete /></el-icon>
+                </span>
+              </span>
+            </div>
+          </template>
         </el-upload>
+
+        <el-dialog v-model="dialogVisible">
+          <img w-full :src="dialogImageUrl" alt="Preview Image" />
+        </el-dialog>
     </div>
 </template>
 
@@ -16,16 +38,38 @@
     import { ref } from 'vue'
     import { ElMessage } from 'element-plus'
     import { Plus } from '@element-plus/icons-vue'
-
     import { uploadUserAvatarReq } from '@/apis/userApis.js'
 
+    const dialogImageUrl = ref('')
+    const dialogVisible = ref(false)
+    const disabled = ref(false)
+    const fileList = ref([
+      {
+        name: 'food.jpeg',
+        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+      },
+      {
+        name: 'food2.jpeg',
+        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+      },
+    ])
 
-    const imageUrl = ref('')
 
+    const handleRemove = (file) => {
+      console.log(file)
+    }
+
+    const handlePictureCardPreview = (file) => {
+      dialogImageUrl.value = file.url
+      dialogVisible.value = true
+    }
+
+    const handleDownload = (file) => {
+      console.log(file)
+    }
  
     const handleAvatarSuccess =  (res,uploadFile) => {
-        imageUrl.value = URL.createObjectURL(uploadFile.raw)
-        
+      console.log(res,uploadFile)
     }
 
     const beforeAvatarUpload = async (rawFile) => {
@@ -36,9 +80,12 @@
           ElMessage.error('Avatar picture size can not exceed 2MB!')
           return false
       }
-      // retun false 可以改成自己的自定义的上传方式
+      return true
+    }
 
-
+    const sendImgToBed = (options) => {
+      console.log(options,'options')
+      const rawFile = options.file
       const reader = new FileReader();
       reader.readAsBinaryString(rawFile);
       reader.onload = async () => {
@@ -46,11 +93,11 @@
         const base64String = btoa(binaryString);
 
         console.log(base64String);
-        await uploadUserAvatarReq(base64String,rawFile.name)
+        const res = await uploadUserAvatarReq(base64String,rawFile.name)
         ElMessage.success("上传成功！")
+        handleAvatarSuccess(res,rawFile)
       };
       
-      return false
     }
 
   
