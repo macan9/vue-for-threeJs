@@ -35,20 +35,25 @@ export const userLogGet = async (pageData)=>{
   return await getApi(`/api/v1/users/login_log/?page=${pageData.currentPage}&page_size=${pageData.pageSize}`)
 }
 
+
+const owner = 'mc150324'
+const repo = 'PicGo'
+const path = "img"
+const access_token = "d18bdb11f5111a41281baef050f7933d"
 // gitee 上传图片
-export const uploadUserAvatarReq = async (data,name)=>{
-  const owner = 'mc150324'
-  const repo = 'PicGo'
-  const path = "img"
+export const uploadUserAvatarReq = async (file,name)=>{
   const data_ = {
-    content: data ,
-    access_token: "d18bdb11f5111a41281baef050f7933d",
+    content: file ,
+    access_token,
     message:"图床测试"
   }
   return await postApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}`,data_)
 }
 
 // gitee 获取图片列表
+export const getGiteeImgList =  async () => {
+  return await getApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}?access_token=${access_token}`)
+}
 
 
 
