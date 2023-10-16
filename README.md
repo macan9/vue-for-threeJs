@@ -76,28 +76,28 @@ const updateValue = (val) => {
 ```
 3. 定义 let leftMenu = reactive([])，关于直接对 leftMenu 数组赋值时会让它本身失去响应式
    解决办法
-// 方案1：创建一个响应式对象，对象的属性是数组
+方案1：创建一个响应式对象，对象的属性是数组
 ```js
 const state = reactive({
     arr: []
 });
 state.arr = [1, 2, 3]
 ```
-ini复制代码// 方案2: 使用 ref 函数 
+方案2: 使用 ref 函数 
 ```js
 const state = ref([])
 state.value = [1, 2, 3]
 ```
-ini复制代码方案3: 使用数组的push方法
+方案3: 使用数组的push方法
 ```js
 const arr = reactive([])
 arr.push(...[1, 2, 3])
 ```
-4. 将 proxy 数组对象转化为 可读数组
+1. 将 proxy 数组对象转化为 可读数组
 ```js
 const leftMenu = reactive({
-      leftMenuVal:[]
-    })
+   leftMenuVal:[]
+})
 const target = Array.from(leftMenu.leftMenuVal);
 ```
 
