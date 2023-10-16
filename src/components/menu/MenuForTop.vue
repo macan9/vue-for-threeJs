@@ -24,14 +24,13 @@
   
 <script lang="js" setup>
     // import { useStore } from 'vuex'
-    import { useRouter } from 'vue-router';
     import { ref, defineEmits } from 'vue'
+    import { loginOut } from '@/common/plugins/user_manage_methods'
 
     import { menu_top_config } from '@/common/config/menu_top_config'
 
     
     // const store = useStore()
-    const router = useRouter()
 
     const menuVal = localStorage.getItem('topMenuValue')
     const activeIndex = menuVal ? ref(menuVal) : ref('1')
@@ -47,12 +46,7 @@
 
     const userInfo = localStorage.getItem('userInfo');
     const username = JSON.parse(userInfo).username
-    const loginOut = () => {
-        // store.commit('updateLoginStatus')
-        localStorage.setItem('loginStatus', '');
-        localStorage.setItem('userInfo', '');
-        router.push('/login')
-    }
+    
 
 </script>
 

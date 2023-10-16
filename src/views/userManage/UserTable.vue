@@ -8,7 +8,7 @@
         <div class="user-main">
             <div class="user-header">
                 <el-button size="small" type="success" @click="handleAdd()">Add</el-button>
-                <el-button size="small" type="success" @click="getUserData()">upDate</el-button>
+                <el-button size="small" type="success" @click="getUserData()">UpDate</el-button>
             </div>
             <el-table :data="filterTableData" style="width: 100%">
                 <el-table-column label="用户名" prop="username" />

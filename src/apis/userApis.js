@@ -30,7 +30,12 @@ export const userDelete = async (id)=>{
   return await delApi(`/api/v1/users/delete/${id}/`)
 }
 
-// gitee 头像仓库
+// 用户登录日志
+export const userLogGet = async (pageData)=>{
+  return await getApi(`/api/v1/users/login_log/?page=${pageData.currentPage}&page_size=${pageData.pageSize}`)
+}
+
+// gitee 上传图片
 export const uploadUserAvatarReq = async (data,name)=>{
   const owner = 'mc150324'
   const repo = 'PicGo'
@@ -42,6 +47,8 @@ export const uploadUserAvatarReq = async (data,name)=>{
   }
   return await postApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}`,data_)
 }
+
+// gitee 获取图片列表
 
 
 

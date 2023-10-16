@@ -30,6 +30,11 @@ export const menu_left_config = [
                 value: '1-2',
                 path: "/userTable",
                 icon: "CollectionTag"
+            },{
+                label: "用户日志",
+                value: '1-3',
+                path: "/userLog",
+                icon: "Document"
             },
         ] 
     },{
