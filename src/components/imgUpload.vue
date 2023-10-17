@@ -9,22 +9,25 @@
             :before-upload="beforeAvatarUpload"
             :http-request="sendImgToBed"
         >
-          <el-icon><Plus /></el-icon>
+          <el-button type="success" :icon="Plus">新增</el-button>
 
           <template #file="{ file }">
             <div style="display:flex">
               <img class="el-upload-list__item-thumbnail" :src="file.download_url" alt="" />
-              <span class="el-upload-list__item-actions">
-                <span @click="handlePictureCardPreview(file)">
-                  <el-icon><zoom-in /></el-icon>
+              <div class="file__info">
+                <div class="flie__info__name"> {{file.name}}</div>
+                <span class="el-upload-list__item-actions">
+                  <span @click="handlePictureCardPreview(file)">
+                    <el-icon><zoom-in /></el-icon>
+                  </span>
+                  <span @click="handleDownload(file)">
+                    <el-icon><Download /></el-icon>
+                  </span>
+                  <span @click="handleRemove(file)">
+                    <el-icon><Delete /></el-icon>
+                  </span>
                 </span>
-                <span @click="handleDownload(file)">
-                  <el-icon><Download /></el-icon>
-                </span>
-                <span @click="handleRemove(file)">
-                  <el-icon><Delete /></el-icon>
-                </span>
-              </span>
+              </div>
             </div>
           </template>
         </el-upload>
@@ -39,15 +42,18 @@
     import { ref } from 'vue'
     import { ElMessage } from 'element-plus'
     import { Plus } from '@element-plus/icons-vue'
-    import { uploadUserAvatarReq,getGiteeImgList } from '@/apis/userApis.js'
+    import { uploadUserAvatarReq,getGiteeImgList,delGiteeImg } from '@/apis/userApis.js'
 
     const dialogImageUrl = ref('')
     const dialogVisible = ref(false)
     const fileList = ref([])
 
 
-    const handleRemove = (file) => {
+    const handleRemove = async (file) => {
       console.log(file)
+      await delGiteeImg(file.sha,file.name)
+      ElMessage.success(`${file.name}删除成功！`)
+      init()
     }
 
     const handlePictureCardPreview = (file) => {
@@ -57,6 +63,13 @@
 
     const handleDownload = (file) => {
       console.log(file)
+      const a = document.createElement('a');
+      a.href = file.download_url;
+      a.download = file.name; // 下载的图片文件名，可以根据实际情况修改
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     const beforeAvatarUpload = async (rawFile) => {
@@ -81,7 +94,7 @@
 
         console.log(base64String);
         await uploadUserAvatarReq(base64String,rawFile.name)
-        ElMessage.success("上传成功！")
+        ElMessage.success(`${rawFile.name}上传成功！`)
         init()
       };
       
@@ -89,17 +102,11 @@
 
     const init = async () => {
       fileList.value = await getGiteeImgList()
-      fileList.value.map(i=>{
-        i.url = i.url + '?access_token=d18bdb11f5111a41281baef050f7933d'
-      })
     }
 
     init()
 
     
-
-  
-
   
 </script>
 <style lang="scss">
@@ -108,26 +115,39 @@
   .el-upload-for-use{
     height: 95%;
     margin: 0 auto;
-    
-    .el-upload-list{
-      height: calc(100% - 30px);
-      overflow: auto;
-      >li{
-        width: 60%;
-        min-width: 300px;
-        margin: 10px auto;
+    .file__info{
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-left: 15px;
+      .flie__info__name{
+        width: 100%;
+        text-align: left;
+        margin: 10px 0
       }
       .el-upload-list__item-actions{
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-left: 30px;
         >span{
           font-size: 23px;
           display: block;
           margin-right: 30px;
         }
       }
+    }
+    .el-upload-list{
+      height: calc(100% - 30px);
+      overflow: auto;
+      >li{
+        width: 40%;
+        min-width: 400px;
+        margin: 10px auto;
+      }
+      
     }
   }
 }
