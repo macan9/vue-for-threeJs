@@ -101,13 +101,18 @@ export const menu_left_config = [
         pid: "7",
         children: [
             {
-                label: "烟花",
+                label: "解压星海",
                 value: "7-1",
+                path: "/starSea",
+                icon: "House"
+            },{
+                label: "烟花",
+                value: "7-2",
                 path: "/BlogMain",
                 icon: "House"
             },{
                 label: "转盘",
-                value: "8-1",
+                value: "7-3",
                 path: "/BlogMain",
                 icon: "House"
             },
