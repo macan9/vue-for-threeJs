@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+// import { globals_config } from '/public/config/globals_config'
 const path = require('path');
 module.exports = defineConfig({
   transpileDependencies: true
@@ -16,14 +17,14 @@ module.exports = {
           '^/api': '/api'  // 将请求地址中的 /api 替换为空字符
         }
       },
-      '/gitee': {
-        target: 'https://gitee.com',  
-        changeOrigin: true,  
-        secure: false,
-        pathRewrite: {
-          '^/gitee': '' 
-        }
-      }
+      // '/gitee': {
+      //   target: 'https://gitee.com',  
+      //   changeOrigin: true,  
+      //   secure: false,
+      //   pathRewrite: {
+      //     '^/gitee': '' 
+      //   }
+      // }
     }
   },
   // 配置公共路径

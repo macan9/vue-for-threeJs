@@ -1,6 +1,6 @@
 //导入axios
 import axios from 'axios'
-// import { globals_config } from '/public/config/globals_config'
+import { globals_config } from '/public/config/globals_config'
 
 import { ElMessage } from 'element-plus'
 import { loginOut } from '@/common/plugins/user_manage_methods'
@@ -8,7 +8,7 @@ import { loginOut } from '@/common/plugins/user_manage_methods'
 
 //使用axios下面的create([config])方法创建axios实例，其中config参数为axios最基本的配置信息。
 const api = axios.create({
-   // baseURL: globals_config,
+   baseURL: globals_config.host_service,
 	timeout: 2000   //请求超时设置，单位ms
 })
 
@@ -22,8 +22,6 @@ api.interceptors.request.use(config => {
    if(isGiteeUrl){
       config.baseURL = 'https://gitee.com';
       config.url = config.url.replace('/gitee','')
-      // config.headers.token = "c3eb97f4e5538bc7db8df3577db0c527"
-      // config.headers['Content-Type'] = 'multipart/form-data; boundary=----WebKitFormBoundaryRP8LAYASHVySFX6r'
    }else{
       const userInfo_str = localStorage.getItem('userInfo')
       if(userInfo_str){
@@ -51,8 +49,7 @@ api.interceptors.response.use(res => {
       message: err,
       type: 'error',
    })
-    if(err.response.status == 401){
-      
+   if(err.response && err.response.status == 401){
       loginOut()
    }
     Promise.reject(err)
