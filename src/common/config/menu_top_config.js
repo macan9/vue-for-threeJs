@@ -25,7 +25,7 @@ export const menu_top_config = [
         path: "/blogMain",
         icon: "List"
     },{
-        label: "聊天模块",
+        label: "消息模块",
         value: "6",
         path: "/blogMain",
         icon: "Iphone"

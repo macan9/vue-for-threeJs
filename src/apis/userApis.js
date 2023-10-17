@@ -1,4 +1,5 @@
 import { postApi, getApi, delApi, putApi } from '@/common/requests/requests.js'
+import { globals_config } from '/public/config/globals_config'
 
 // 用户登录
 export const loginReq = async (data)=>{
@@ -36,17 +37,11 @@ export const userLogGet = async (pageData)=>{
 }
 
 
-const owner = 'mc150324'
-const repo = 'PicGo'
-const path = "img"
-const access_token = "d18bdb11f5111a41281baef050f7933d"
+
+const { owner, repo, path, access_token,message } = globals_config.gitee_user_config
 // gitee 上传图片
 export const uploadUserAvatarReq = async (file,name)=>{
-  const data_ = {
-    content: file ,
-    access_token,
-    message:"图床测试"
-  }
+  const data_ = { content: file, access_token, message }
   return await postApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}`,data_)
 }
 
@@ -54,6 +49,13 @@ export const uploadUserAvatarReq = async (file,name)=>{
 export const getGiteeImgList =  async () => {
   return await getApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}?access_token=${access_token}`)
 }
+
+export const delGiteeImg =  async (sha,name) => {
+  const data = { access_token, message, sha }
+  const delStr = `?access_token=${access_token}&message=${message}&sha=${sha}`
+  return await delApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}${delStr}`,data)
+}
+
 
 
 

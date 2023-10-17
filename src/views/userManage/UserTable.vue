@@ -21,7 +21,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="个性签名" prop="description" />
-                <el-table-column align="right">
+                <el-table-column align="right" width="200" >
                     <template #header>
                         <el-input v-model="search" size="small" placeholder="输入用户名过滤" />
                     </template>

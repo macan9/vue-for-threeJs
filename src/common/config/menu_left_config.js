@@ -18,11 +18,6 @@ export const menu_left_config = [
                         value: '1-1-2',
                         path: "/UseView",
                         icon: "House"
-                    },{
-                        label: "头像上传",
-                        value: '1-1-3',
-                        path: "/imgUpload",
-                        icon: "House"
                     }
                 ]
             },{
@@ -35,7 +30,12 @@ export const menu_left_config = [
                 value: '1-3',
                 path: "/userLog",
                 icon: "Document"
-            },
+            },{
+                label: "图床管理",
+                value: '1-4',
+                path: "/imgUpload",
+                icon: "UploadFilled"
+            }
         ] 
     },{
         pid: '2',

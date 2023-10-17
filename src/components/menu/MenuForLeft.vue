@@ -1,10 +1,9 @@
 <template>
   <el-menu
-    active-text-color="#ffd04b"
-    background-color="#545c64"
+    active-text-color="#337ECC"
+    background-color="#ECF5FF"
     class="el-menu-vertical-demo"
     :default-active='defaultActiveMenu'
-    text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
     @select="selectMenuAfter"
@@ -148,7 +147,10 @@
   <style lang="scss">
     .el-menu-vertical-demo{
       height: 100%;
-      width: 140px;
+      width: 125px;
+      .el-sub-menu .el-sub-menu__icon-arrow{
+        margin-right: -15px;
+      }
     }
   </style>
   

@@ -10,9 +10,9 @@
                 <el-button size="small" type="success" @click="UpDateInfo()">UpDate</el-button>
             </div>
             <el-table :data="filterTableData" style="width: 100%">
-                <el-table-column label="用户名" prop="username" width="180"/>
-                <el-table-column label="ip" prop="ip" />
-                <el-table-column label="登录状态" prop="status" width="180">
+                <el-table-column label="用户名" prop="username" width="100" />
+                <el-table-column label="ip" prop="ip" width="180" />
+                <el-table-column label="登录状态" prop="status" width="150">
                     <template #default="scope">
                         {{scope.row.status?"登录成功":"登录失败"}}
                     </template>
