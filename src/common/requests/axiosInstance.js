@@ -8,6 +8,7 @@ import { loginOut } from '@/common/plugins/user_manage_methods'
 
 //使用axios下面的create([config])方法创建axios实例，其中config参数为axios最基本的配置信息。
 const api = axios.create({
+   // baseURL: globals_config,
 	timeout: 2000   //请求超时设置，单位ms
 })
 
