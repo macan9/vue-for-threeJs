@@ -53,7 +53,7 @@
   import { userInfoGet, userInfoPut } from '@/apis/userApis.js'
   import { user_authority } from '@/common/plugins/user_config.js'
 
-  const emit = defineEmits(['update-user-data']);
+  
   
   const props = defineProps({
     dialogVisible: {
@@ -89,6 +89,7 @@
       })
   }
 
+  const emit = defineEmits(['update-user-data']);
   const closeDialog = () =>{
     emit('update-user-data')
     visible.value.attr = false

@@ -32,25 +32,43 @@ export const userDelete = async (id)=>{
 }
 
 // 用户登录日志
-export const userLogGet = async (pageData)=>{
-  return await getApi(`/api/v1/users/login_log/?page=${pageData.currentPage}&page_size=${pageData.pageSize}`)
+export const userLogGet = async (params)=>{
+  let url_string = '?'
+  Object.keys(params).map(k=>{
+    url_string += k + "=" + params[k] + "&"
+  })
+  url_string = url_string.slice(0, -1)
+  return await getApi(`/api/v1/users/login_log/${url_string}`)
 }
 
 
+function upDateGiteeConfig() {
+  let giteeConfig
+  const configString = localStorage.getItem('giteeConfig')
+  if(configString && JSON.parse(configString)){
+    giteeConfig = JSON.parse(configString)
+  }else{
+    giteeConfig = globals_config.gitee_user_config
+  }
+  return giteeConfig
+}
 
-const { owner, repo, path, access_token,message } = globals_config.gitee_user_config
+
 // gitee 上传图片
 export const uploadUserAvatarReq = async (file,name)=>{
+  const { owner, repo, path, access_token, message } = upDateGiteeConfig()
   const data_ = { content: file, access_token, message }
   return await postApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}`,data_)
 }
 
 // gitee 获取图片列表
 export const getGiteeImgList =  async () => {
+  const { owner, repo, path, access_token } = upDateGiteeConfig()
   return await getApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}?access_token=${access_token}`)
 }
 
 export const delGiteeImg =  async (sha,name) => {
+  const { owner, repo, path, access_token, message } = upDateGiteeConfig()
   const data = { access_token, message, sha }
   const delStr = `?access_token=${access_token}&message=${message}&sha=${sha}`
   return await delApi(`/gitee/api/v5/repos/${owner}/${repo}/contents/${path}/${name}${delStr}`,data)

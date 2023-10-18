@@ -106,6 +106,11 @@ export const menu_left_config = [
                 path: "/starSea",
                 icon: "House"
             },{
+                label: "涂鸦跳跃",
+                value: "7-4",
+                path: "/BlogMain",
+                icon: "House"
+            },{
                 label: "烟花",
                 value: "7-2",
                 path: "/BlogMain",

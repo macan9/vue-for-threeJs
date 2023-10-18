@@ -38,8 +38,14 @@
         <div class="user-bottom"></div>
 
         <UserRegister @update-user-data="getUserData" :dialogVisible="dialogAddVisible"></UserRegister>
-        <UserEdit v-if="dialogEditVisible.attr" :dialogVisible="dialogEditVisible" 
-         @update-user-data="getUserData" :userId="userId"></UserEdit>
+
+        <UserEdit 
+            v-if="dialogEditVisible.attr" 
+            :userId="userId"
+            :dialogVisible="dialogEditVisible" 
+            @update-user-data="getUserData" 
+        >
+        </UserEdit>
     </div>
     
 </template>

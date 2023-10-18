@@ -58,6 +58,27 @@
     role: '',
     description: '',
   })
+  
+  const registerUser = async  (formEl) => {
+    console.log(formEl,'formEl')
+    if (!formEl) return
+    await formEl.validate(async (valid, fields)=>{
+      console.log(userRuleFormRef)
+      if (valid) {
+        console.log('submit!')
+        // 校验通过，执行提交逻辑
+        registerReq(userForm)
+        ElMessage({
+            message: '注册成功',
+            type: 'success',
+        })
+        closeDialog()
+      } else {
+        console.log('error submit!', fields)
+        // 校验不通过，提示错误信息 ...
+      }
+    })
+  }
 
   const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
@@ -90,27 +111,7 @@
     ],
   })
 
-  const registerUser = async  (formEl) => {
-    console.log(formEl,'formEl')
-    if (!formEl) return
-    await formEl.validate(async (valid, fields)=>{
-      console.log(userRuleFormRef)
-      if (valid) {
-        console.log('submit!')
-        // 校验通过，执行提交逻辑
-        registerReq(userForm)
-        ElMessage({
-            message: '注册成功',
-            type: 'success',
-        })
-        closeDialog()
-      } else {
-        console.log('error submit!', fields)
-        // 校验不通过，提示错误信息
-        // ...
-      }
-    })
-  }
+  
 
 </script>
 

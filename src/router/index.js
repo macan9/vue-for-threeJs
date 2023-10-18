@@ -43,15 +43,11 @@ const routes = [
       },{
         path: '/imgUpload',
         name: 'imgUpload',
-        component: () => import('@/components/imgUpload.vue')
-      },{
-        path: '/imgUpload',
-        name: 'imgUpload',
-        component: () => import('@/components/imgUpload.vue')
+        component: () => import('@/components/ImgUpload.vue')
       },{
         path: '/starSea',
         name: 'starSea',
-        component: () => import('@/views/interestingThing/starSea.vue')
+        component: () => import('@/views/interestingThing/StarSea.vue')
       }
     ]
   },
