@@ -4,10 +4,20 @@
             <div class="page-title">用户日志</div>
         </div>
        
-
         <div class="user-main">
             <div class="user-header">
                 <el-button size="small" type="success" @click="UpDateInfo()">UpDate</el-button>
+                <div style="margin-left:20px">
+                    <span>时间筛选：</span>
+                    <el-date-picker
+                        v-model="time_values"
+                        type="datetimerange"
+                        start-placeholder="Start Date"
+                        end-placeholder="End Date"
+                        :default-time="defaultTime"
+                        size="small"
+                    />
+                </div>
             </div>
             <el-table :data="filterTableData" style="width: 100%">
                 <el-table-column label="用户名" prop="username" width="100" />
@@ -43,8 +53,24 @@
     import { userLogGet } from "@/apis/userApis.js"
     import { computed, ref } from 'vue'
     import { ElMessage } from 'element-plus'
+    import { DailyTimeFormat } from '@/utils/utils.js'
     
     const tableData = ref([]);
+
+    const currentDate = new Date();
+    // 获取当前日期时间的年份
+    const currentYear = currentDate.getFullYear();
+    const oneYearAgoYear = currentYear - 1;
+    const oneYearAgoDate = new Date(oneYearAgoYear,
+        currentDate.getMonth(), currentDate.getDate(), 
+        currentDate.getHours(), currentDate.getMinutes(),
+        currentDate.getSeconds()
+    );
+    const defaultTime  = [
+        oneYearAgoDate,
+        currentDate,
+    ]
+    const time_values = ref(defaultTime)
 
     // 分页逻辑
     const total = ref(1)
@@ -56,11 +82,13 @@
     )
 
     const getUserLogData = async () => {
-        const page = {
+        const params = {
             currentPage:currentPage.value,
-            pageSize:pageSize.value
+            pageSize:pageSize.value,
+            start_time: DailyTimeFormat(time_values.value[0]),
+            end_time: DailyTimeFormat(time_values.value[1]),
         }
-        const  { data, code, count } = await userLogGet(page)
+        const  { data, code, count } = await userLogGet(params)
         tableData.value = data
         total.value = count
         return code 

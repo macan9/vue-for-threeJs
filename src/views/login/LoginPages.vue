@@ -26,14 +26,13 @@ export default {
     setup(){
         const username = ref('admin');
         const password = ref('123456');
-        let dialogVisible_ = reactive({attr:false})
+        const dialogVisible_ = reactive({attr:false})
         
         
         // const store = useStore()
         const router = useRouter();
 
         const openRigsterPage = () => {
-            console.log(dialogVisible_.attr,'dialogVisible_')
             dialogVisible_.attr = true
         }
 
