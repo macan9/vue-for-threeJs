@@ -47,7 +47,7 @@ const routes = [
       },{
         path: '/starSea',
         name: 'starSea',
-        component: () => import('@/views/interestingThing/StarSea.vue')
+        component: () => import('@/views/interestThing/StarSea.vue')
       }
     ]
   },
