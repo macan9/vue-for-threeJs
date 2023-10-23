@@ -1,1 +1,2 @@
+public/models/threeJsModels/gc.skp filter=lfs diff=lfs merge=lfs -text filter=lfs diff=lfs merge=lfs -text
 *.skp filter=lfs diff=lfs merge=lfs -text
