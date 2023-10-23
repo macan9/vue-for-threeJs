@@ -48,6 +48,10 @@ const routes = [
         path: '/starSea',
         name: 'starSea',
         component: () => import('@/views/interestThing/StarSea.vue')
+      },{
+        path: '/markEditor',
+        name: 'markEditor',
+        component: () => import('@/views/blogSystem/MarkEditor.vue')
       }
     ]
   },
