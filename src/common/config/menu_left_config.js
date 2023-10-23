@@ -35,6 +35,11 @@ export const menu_left_config = [
                 value: '1-4',
                 path: "/imgUpload",
                 icon: "UploadFilled"
+            },{
+                label: "MD编辑器",
+                value: '1-5',
+                path: "/markEditor",
+                icon: "Memo"
             }
         ] 
     },{
