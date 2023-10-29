@@ -49,9 +49,9 @@ const routes = [
         name: 'starSea',
         component: () => import('@/views/interestThing/StarSea.vue')
       },{
-        path: '/markEditor',
-        name: 'markEditor',
-        component: () => import('@/views/blogSystem/MarkEditor.vue')
+        path: '/MarkJsRender',
+        name: 'MarkJsRender',
+        component: () => import('@/views/blogSystem/MarkJsRender.vue')
       }
     ]
   },
