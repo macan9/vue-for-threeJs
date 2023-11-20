@@ -37,6 +37,10 @@ const routes = [
         name: 'threeGuiBase',
         component: () => import('@/views/three/ThreeGuiBase.vue')
       },{
+        path: '/ThreeIsland',
+        name: 'ThreeIsland',
+        component: () => import('@/views/three/ThreeIsland.vue')
+      },{
         path: '/threePlanet',
         name: 'threePlanet',
         component: () => import('@/views/three/ThreePlanet.vue')

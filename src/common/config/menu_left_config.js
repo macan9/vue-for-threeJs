@@ -70,6 +70,11 @@ export const menu_left_config = [
                 value: '3-2',
                 path: "/ThreePlanet",
                 icon: "House"
+            },{
+                label: "三维小岛",
+                value: '3-3',
+                path: "/ThreeIsland",
+                icon: "House"
             },
         ] 
     },{
