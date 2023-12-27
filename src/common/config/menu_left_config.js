@@ -80,6 +80,11 @@ export const menu_left_config = [
                 value: '3-3',
                 path: "/ThreeIsland",
                 icon: "House"
+            },{
+                label: "躲避尖刺",
+                value: '3-4',
+                path: "/DontHitTheSpike",
+                icon: "House"
             },
         ] 
     },{

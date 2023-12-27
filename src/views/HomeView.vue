@@ -45,7 +45,7 @@ export default {
 
     const route = useRoute();
     const hasPadding = ref(true)
-    const noPaddingRoutes = ['/LeafletMap','/ThreeGuiBase','/ThreePlanet','/ThreeIsland']
+    const noPaddingRoutes = ['/LeafletMap','/ThreeGuiBase','/ThreePlanet','/ThreeIsland','/DontHitTheSpike']
 
     watch(
       () => route.path,

@@ -41,6 +41,10 @@ const routes = [
         name: 'ThreeIsland',
         component: () => import('@/views/three/ThreeIsland.vue')
       },{
+        path: '/DontHitTheSpike',
+        name: 'DontHitTheSpike',
+        component: () => import('@/views/three/DontHitTheSpike.vue')
+      },{
         path: '/threePlanet',
         name: 'threePlanet',
         component: () => import('@/views/three/ThreePlanet.vue')
