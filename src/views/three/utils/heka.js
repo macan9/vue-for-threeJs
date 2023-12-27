@@ -312,7 +312,6 @@ export const islandInit = () => {
 
 } 
 
-
 function changeText() {
     console.log(index)
     let box = document.getElementById('liBox')
@@ -381,7 +380,6 @@ function restoreHeart() {
     })
     resetheartTween.start()
 }
-
 
 function render() {
     TWEEN.update();

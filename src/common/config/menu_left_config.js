@@ -40,6 +40,11 @@ export const menu_left_config = [
                 value: '1-5',
                 path: "/MarkJsRender",
                 icon: "Memo"
+            },{
+                label: "富文本",
+                value: '1-6',
+                path: "/MarkEditor",
+                icon: "Memo"
             }
         ] 
     },{
