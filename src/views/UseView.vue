@@ -1,15 +1,9 @@
 <template>
   <div class="use-home">
-
-  
-
       <div class="main-display">
         <div>use</div> 
         <el-button @click="routeBack"> 返回 </el-button>
       </div>
-      
-
-    
   </div>
 </template>
 

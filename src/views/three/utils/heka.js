@@ -341,7 +341,7 @@ function translateCamera(position, target) {
     controlsTween.start()
 }
 
-function makeHeart(starsInstance) {
+function makeHeart() {
     let params = {
         time: 0,
     };

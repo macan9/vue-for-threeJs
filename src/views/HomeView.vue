@@ -35,6 +35,8 @@ export default {
     const menuVal = localStorage.getItem('topMenuValue')
     const topMenuValue = menuVal ? ref(menuVal) : ref('1')
 
+	// const topMenuValue =  ref('1')
+
     const setTopMenuValue = (val) => {
       topMenuValue.value = val
     }
