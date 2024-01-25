@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { ElMessage } from 'element-plus'
 import createGeometry from './utils/createGeometry.js'
 import { onMounted, onUnmounted } from 'vue';
-
+let renderLoop = false
 let scene = null // 场景
 let camera = null // 相机
 let axes = null // 坐标轴
@@ -197,8 +197,9 @@ function animate() {
 
   sphere3.position.x = 40 * Math.cos(guiConfiguration.sphereInitVelocity - 0.9)
   sphere3.position.z = 40 * Math.sin(guiConfiguration.sphereInitVelocity - 0.9)
+//   console.log(scene, camera,'---scene, camera---')
   renderer.render(scene, camera)
-  requestAnimationFrame(animate)
+  renderLoop && requestAnimationFrame(animate)
 }
 // 获取pfs状态
 // function getStats() {
@@ -254,11 +255,13 @@ function animate() {
 // }
 onMounted(() => {
   init()
+  renderLoop = true
   animate()
 //   getStats()
 //   configGUI()
 })
 onUnmounted(() => {
+	renderLoop = false
   // const guiDom = gui.domElement
   // guiDom.parentNode.removeChild(guiDom)
 

@@ -5,9 +5,10 @@
 </template>
 
 <script setup>
-    import { onMounted } from 'vue';
+    import { onMounted,onUnmounted } from 'vue';
 
     let context, canvas;
+	let renderLoop = false
     
     onMounted(() => {
         // 获取canvas元素
@@ -20,7 +21,8 @@
         // 调整大小
         resize();
         // 运行动画
-        step();
+		renderLoop = true
+        renderLoop && step();
         // 当窗口大小改变时，重新调整大小
         window.onresize = resize;
         // 当鼠标在canvas上移动时，更新鼠标指针位置
@@ -32,6 +34,10 @@
         // 当鼠标离开文档时，更新鼠标指针位置
         document.onmouseleave = onMouseLeave;
     })
+
+	onUnmounted(()=>{
+		renderLoop = false
+	})
 
     // 定义星星的颜色
     const STAR_COLOR = '#fff';

@@ -7,9 +7,14 @@
 </template>
 <script setup>
 import { islandInit } from './utils/heka.js' 
-import { onMounted } from 'vue';
+import { onMounted,onUnmounted } from 'vue';
+let renderLoop = false
 onMounted(()=>{
-	islandInit()
+	renderLoop = true
+	islandInit(renderLoop)
+})
+onUnmounted(()=>{
+	renderLoop = false
 })
 </script>
 <style lang="scss">

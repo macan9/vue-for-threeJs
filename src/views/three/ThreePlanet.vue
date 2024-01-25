@@ -2,7 +2,7 @@
 import * as THREE from 'three'
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { onMounted } from 'vue';
+import { onMounted,onUnmounted } from 'vue';
 
 
 // 行星配置
@@ -317,6 +317,8 @@ createOrbit(10)
 onMounted(() => {
   // 初始化
   init()
+})
+onUnmounted(()=>{
 })
 // 监听窗口变化
 window.addEventListener('resize', onWindowResize, false)

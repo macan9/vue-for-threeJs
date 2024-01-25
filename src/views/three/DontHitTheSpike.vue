@@ -1,9 +1,12 @@
 <template>
-  <div class="dont-hit-the-spikes">
-    <h1>Press the up arrow to jump</h1>
-    <h1 class="score">score: 0</h1>
-    <h1 class="lastScore">Last score: 0</h1>
-    <h1 class="lose">You lose!</h1>
+  <div class="dont-hit-the-spikes" >
+	<div id="dont-hit"></div>
+	<div class="dont-hit-remind">
+		<h1>Press the up arrow to jump</h1>
+		<h1 class="score">score: 0</h1>
+		<h1 class="lastScore">Last score: 0</h1>
+		<h1 class="lose">You lose!</h1>
+	</div>
   </div>
 </template>
 
@@ -12,10 +15,13 @@ import * as THREE from "three";
 import { TimelineMax } from "gsap/all";
 import { onMounted,onUnmounted } from "vue";
 
-var render,renderer,player
+var render,player
+let renderer = null // 渲染器
+let renderLoop = false
 onMounted(() => {
-	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera(
+
+	// 定义相机
+	const camera = new THREE.PerspectiveCamera(
 		75,
 		window.innerWidth / window.innerHeight,
 		0.1,
@@ -35,6 +41,8 @@ onMounted(() => {
 
 	var gravity = new THREE.Vector3(0, -0.1, 0);
 
+	// 定义场景
+	const scene = new THREE.Scene();
 	var floorgeo = new THREE.BoxGeometry(30, 0.5, 500);
 	var floormat = new THREE.MeshLambertMaterial({ color: 0x0000aa });
 	var floormesh = new THREE.Mesh(floorgeo, floormat);
@@ -45,9 +53,9 @@ onMounted(() => {
 	var ceilingmesh = new THREE.Mesh(ceilinggeo, ceilingmat);
 	scene.add(ceilingmesh);
 	ceilingmesh.position.y = 15;
-
 	scene.fog = new THREE.Fog("#001d45", 10, 300);
 
+	// 添加尖刺障碍
 	var cones = [];
 	for (var i = 0; i < 1000; i++) {
 	let h = 5;
@@ -69,6 +77,7 @@ onMounted(() => {
 		if (dirR >= 0.66) cone.position.x = 7.5;
 	}
 
+	// 定义光源
 	var light1 = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 	scene.add(light1);
 
@@ -77,19 +86,21 @@ onMounted(() => {
 	scene.add(light);
 
 
+	// 定义渲染器  antialias: 更好的锯齿效果
 	renderer = new THREE.WebGLRenderer({ antialias: true });
+	console.log(renderer,document.getElementById('dont-hit').children,'---renderer---')
 	scene.background = new THREE.Color("#001d45");
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-
+	renderer.setSize(window.innerWidth - 125, window.innerHeight - 60);
+	document.getElementById('dont-hit').appendChild(renderer.domElement)
+	
 	window.addEventListener("resize", () => {
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
 	});
 
+	// 渲染函数
 	render = () => {
-		requestAnimationFrame(render);
 
 		let dead = false;
 		for (var i = 0; i < cones.length; i++) {
@@ -154,9 +165,12 @@ onMounted(() => {
 		}
 
 		renderer.render(scene, camera);
+		requestAnimationFrame(render);
 	};
-	render();
+	renderLoop = true
+	renderLoop && render();
 
+	// 监听键盘事件
 	document.addEventListener("keyup", (e) => {
 		if (e.code === "ArrowUp") {
 		gravity.y *= -1;
@@ -196,48 +210,58 @@ onMounted(() => {
 });
 
 onUnmounted(()=>{
-	renderer.dispose()
-	player.hit = true;
+	renderLoop = false
+	player.hit = false;
 })
 </script>
 <style lang="scss">
 .dont-hit-the-spikes {
 	width: 100%;
 	height: 100%;
-  h1 {
-    // position: absolute;
-    max-width: 150px;
-    top: 0.5rem;
-    left: 1.5rem;
-    color: #fcba03;
-    font-size: 1.25rem;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
-    font-family: Arial;
-  }
+	#dont-hit{
+		width: 100%;
+		height: 100%;
+	}
+	.dont-hit-remind{
+		position: absolute;
+		top: 70px;
+    left: 155px;
+		h1 {
+			// position: absolute;
+			max-width: 150px;
+			top: 0.5rem;
+			left: 1.5rem;
+			color: #fcba03;
+			font-size: 1.25rem;
+			text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+			font-family: Arial;
+		}
 
-  &.lastScore {
-    left: calc(100vw - 10.8rem);
-    top: 2rem;
-  }
-  &.score {
-    left: calc(100vw - 8rem);
-  }
-  &.lose {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    width: 100vw !important;
-    max-width: 100vw;
-    font-size: 5rem;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.2s ease-out;
-  }
-  &.show {
-    opacity: 1;
-  }
-  canvas {
-    display: block;
-  }
+		&.lastScore {
+			left: calc(100vw - 10.8rem);
+			top: 2rem;
+		}
+		&.score {
+			left: calc(100vw - 8rem);
+		}
+		&.lose {
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			width: 100vw !important;
+			max-width: 100vw;
+			font-size: 5rem;
+			text-align: center;
+			opacity: 0;
+			transition: opacity 0.2s ease-out;
+		}
+		&.show {
+			opacity: 1;
+		}
+		canvas {
+			display: block;
+		}
+	}
+  
 }
 </style>

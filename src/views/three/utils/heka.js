@@ -21,7 +21,7 @@ import { TWEEN } from 'three/addons/libs/tween.module.min.js'
 let index = 0
 let camera,controls,starsArr,endArr,starsInstance,renderer,scene
 
-export const islandInit = () => {
+export const islandInit = (renderLoop) => {
 	const webThree = document.getElementById('webThree')
 	// 定义相机输出画布的尺寸(单位:像素px)  fov, aspect, near, far 构成一个四棱台3D空间
 	const width = webThree.clientWidth; //宽度
@@ -291,7 +291,7 @@ export const islandInit = () => {
 	// const axesHelper = new THREE.AxesHelper(150);
 
 	// scene.add(axesHelper);
-	render()
+	renderLoop && render()
 
 	controls = new OrbitControls(camera, renderer.domElement);
 	// controls.enableDamping = true;
